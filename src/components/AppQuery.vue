@@ -113,7 +113,7 @@ export default {
 <template>
   <div v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
 		<h3>Total Project Time:</h3>
-    <p><b>Date filter:</b> from <input type="date" name="" v-model="startDate"> to <input type="date" name="" v-model="endDate">&nbsp;
+    <p><b>Date filter:<br></b> from <input type="date" name="" v-model="startDate"> to <input type="date" name="" v-model="endDate">&nbsp;
     <button type="button" name="button" @click="updateQuery">Apply</button>&nbsp;
     <button type="button" name="button" @click="{ this.startDate=''; this.endDate=''; updateQuery() }">Reset</button>  </p>
     <table class="query_table">
