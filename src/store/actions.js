@@ -10,6 +10,9 @@ const ADD_WORK = (context) => {
 const SAVE_WORK = (context, index) => {
       context.commit('WORK_SAVE', index)
     }
+const WORK_DEL = (context, index) => {
+      context.commit('WORK_DEL_ROW', index)
+    }
 const BUTTYPE_CHANGE = (context, value) => {
       context.commit('changeButType', value)
     }
@@ -25,6 +28,7 @@ export default {
   CHANGE_INPUT,
   ADD_WORK,
   SAVE_WORK,
+  WORK_DEL,
   BUTTYPE_CHANGE,
   CURNUM_SET,
   INC_WORKSCHANGE

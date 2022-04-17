@@ -1,4 +1,4 @@
-const CLEAR_INPUT = (state) => {
+const CLEAR_INPUT = state => {
       state.tdate = '';
       state.tprojName = '';
       state.tworkType = '';
@@ -12,7 +12,7 @@ const SET_INPUT = (state, index) => {
       state.ttime = state.works[index].time;
     }
 
-const WORKS_PUSH = (state) => {
+const WORKS_PUSH = state => {
       state.works.push({ 			//add row
         id: state.works.length+1,
         date: state.tdate,
@@ -28,6 +28,10 @@ const WORK_SAVE = (state, index) => {
       state.works[index].projName = state.tprojName;
       state.works[index].workType = state.tworkType;
       state.works[index].time = state.ttime;
+    }
+
+const WORK_DEL_ROW = (state, index) => {
+      state.works.splice(index,1)
     }
 
 const updateDate = (state, tdate) => {
@@ -54,7 +58,7 @@ const setCurNum = (state, value) => {
       state.curNum = value
     }
 
-const incWorksChange = (state) => {
+const incWorksChange = state => {
       state.worksChange++
     }
 
@@ -63,6 +67,7 @@ export default {
   SET_INPUT,
   WORKS_PUSH,
   WORK_SAVE,
+  WORK_DEL_ROW,
   updateDate,
   updateProjName,
   updateWorkType,

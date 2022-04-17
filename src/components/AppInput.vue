@@ -12,13 +12,14 @@ import { mapGetters, mapActions} from 'vuex';
 				'TTIME_STATE',
 				'BUTTYPE_STATE',
 				'CURNUM_STATE'
-			]),
+			])
 		},
 		methods: {
 			...mapActions([
 				'CLEAN_INPUT',
 				'ADD_WORK',
 				'SAVE_WORK',
+				'WORK_DEL',
 				'BUTTYPE_CHANGE',
 				'CURNUM_SET',
 				'INC_WORKSCHANGE'
@@ -41,7 +42,7 @@ import { mapGetters, mapActions} from 'vuex';
 					return false
 				}
 				if (this.WORKS_STATE.length==1 && this.WORKS_STATE[0].date==''){
-					this.WORKS_STATE.splice(0,1) //delete 1st empty row
+					this.WORK_DEL(0); //delete 1st empty row
 				}
 
 				this.ADD_WORK();

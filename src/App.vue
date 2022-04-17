@@ -22,6 +22,7 @@ import {mapGetters, mapActions} from 'vuex'
 		},
 		methods: {
 			...mapActions([
+				'WORK_DEL',
 				'CHANGE_INPUT',
 				'BUTTYPE_CHANGE',
 				'CURNUM_SET',
@@ -35,7 +36,7 @@ import {mapGetters, mapActions} from 'vuex'
 				this.CURNUM_SET(value);
 			},
 			deleteRec(value){ //delete row
-				this.WORKS_STATE.splice(value,1)
+				this.WORK_DEL(value);
 
 				this.CLEAN_INPUT();
 
