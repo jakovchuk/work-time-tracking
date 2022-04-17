@@ -19,7 +19,8 @@ const WORKS_PUSH = state => {
         projName: state.tprojName,
         workType: state.tworkType,
         time: state.ttime
-      })
+      });
+      state.works.sort((a, b) => a.date > b.date ? 1 : -1);
     }
 
 const WORK_SAVE = (state, index) => {
