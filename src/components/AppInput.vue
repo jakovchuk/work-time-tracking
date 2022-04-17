@@ -1,5 +1,5 @@
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions} from 'vuex';
 
 	export default {
 		name: 'AppInput',
@@ -13,12 +13,6 @@ import {mapState, mapGetters, mapActions} from 'vuex';
 				'BUTTYPE_STATE',
 				'CURNUM_STATE'
 			]),
-			...mapState([
-				'tdate',
-				'tprojName',
-				'tworkType',
-				'ttime'
-			])
 		},
 		methods: {
 			...mapActions([
@@ -90,10 +84,10 @@ import {mapState, mapGetters, mapActions} from 'vuex';
 				<td></td>
 			</tr>
 			<tr>
-				<td><input type="date" :value="tdate" @input="updateDate"></td>
-				<td><input type="text" :value="tprojName" @input="updateProjName" list="projNameList"></td>
-				<td><input type="text" :value="tworkType" @input="updateWorkType" list="workTypeList"></td>
-				<td><input type="time" :value="ttime" @input="updateTime"></td>
+				<td><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
+				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList"></td>
+				<td><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList"></td>
+				<td><input type="time" :value="TTIME_STATE" @input="updateTime"></td>
 				<td v-if="BUTTYPE_STATE==0"><button @click="addRec">+ Add record</button></td>
 				<td v-else><button @click="saveRec">Save</button> <button @click="cancelEdit">Cancel</button></td>
 			</tr>
