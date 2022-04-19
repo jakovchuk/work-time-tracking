@@ -1,5 +1,7 @@
 <script>
 import { mapGetters } from 'vuex';
+import { strToSec, secToStr } from '../func'
+
 export default {
   name: 'AppQuery',
   data() {
@@ -20,7 +22,7 @@ export default {
     ])
   },
   methods: {
-    strToSec: function(str) {
+/*    strToSec: function(str) {
       let myTimeArr = str.split(":");
       return parseInt(myTimeArr[0]) * 3600 + parseInt(myTimeArr[1]) * 60;
       },
@@ -32,7 +34,7 @@ export default {
       minutes = minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
 
       return hours+':'+minutes;
-      },
+    },*/
     updateQuery: function() {
       var pr = [];
       var projNm = [];
@@ -51,38 +53,38 @@ export default {
       var eDate = new Date(this.endDate)
       var wDate = new Date()
 
-      if (this.startDate=='' && this.endDate==''){
+      if (this.startDate==='' && this.endDate===''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (var i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
-            if (this.WORKS_STATE[i].projName == projNames[j])
-              { pr[j]+=this.strToSec(this.WORKS_STATE[i].time) }
+            if (this.WORKS_STATE[i].projName === projNames[j])
+              { pr[j]+=strToSec(this.WORKS_STATE[i].time) }
             }
           }
         }
       }
 
-      if (this.startDate=='' && this.endDate!=''){
+      if (this.startDate==='' && this.endDate!=''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
             wDate = Date.parse(this.WORKS_STATE[i].date)
-            if (this.WORKS_STATE[i].projName == projNames[j] &&
+            if (this.WORKS_STATE[i].projName === projNames[j] &&
                 wDate.valueOf() <= eDate.valueOf())
-              { pr[j]+=this.strToSec(this.WORKS_STATE[i].time) }
+              { pr[j]+=strToSec(this.WORKS_STATE[i].time) }
             }
           }
         }
       }
 
-      if (this.startDate!='' && this.endDate==''){
+      if (this.startDate!='' && this.endDate===''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
             wDate = Date.parse(this.WORKS_STATE[i].date)
-            if (this.WORKS_STATE[i].projName == projNames[j] &&
+            if (this.WORKS_STATE[i].projName === projNames[j] &&
                 wDate.valueOf() >= sDate.valueOf())
-              { pr[j]+=this.strToSec(this.WORKS_STATE[i].time) }
+              { pr[j]+=strToSec(this.WORKS_STATE[i].time) }
             }
           }
         }
@@ -93,17 +95,17 @@ export default {
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
             wDate = Date.parse(this.WORKS_STATE[i].date)
-            if (this.WORKS_STATE[i].projName == projNames[j] &&
+            if (this.WORKS_STATE[i].projName === projNames[j] &&
                 wDate.valueOf() >= sDate.valueOf() &&
                 wDate.valueOf() <= eDate.valueOf())
-              { pr[j]+=this.strToSec(this.WORKS_STATE[i].time) }
+              { pr[j]+=strToSec(this.WORKS_STATE[i].time) }
             }
           }
         }
       }
 
       for (j=0; j < projNames.length; j++) { //fill project time array
-        if (pr[j]>0) {this.projTime.push({ id: this.projTime.length+1, projN: projNames[j], projT: this.secToStr(pr[j]) })}
+        if (pr[j]>0) {this.projTime.push({ id: this.projTime.length+1, projN: projNames[j], projT: secToStr(pr[j]) })}
         }
     }
    }
