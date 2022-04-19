@@ -29,14 +29,14 @@ import {mapGetters, mapActions} from 'vuex'
 				'CLEAN_INPUT',
 				'INC_WORKSCHANGE'
 			]),
-			editRec(value){ 	//edit row
-				this.CHANGE_INPUT(value)
+			editRec(row){ 	//edit row
+				this.CHANGE_INPUT(row)
 
 				this.BUTTYPE_CHANGE(1);
-				this.CURNUM_SET(value);
+				this.CURNUM_SET(row);
 			},
-			deleteRec(value){ //delete row
-				this.WORK_DEL(value);
+			deleteRec(row){ //delete row
+				this.WORK_DEL(row);
 
 				this.CLEAN_INPUT();
 
