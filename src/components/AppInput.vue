@@ -36,11 +36,14 @@ import { mapGetters, mapActions} from 'vuex';
 			updateTime(e){
 				this.$store.commit('updateTime', e.target.value)
 			},
-			addRec(){
+			checkInputs(){
 				if (this.TDATE_STATE=='' || this.TPROJNAME_STATE=='' || this.TWORKTYPE_STATE=='' || this.TTIME_STATE=='') {
 					alert('Fill ALL inputs, please!');
 					return false
-				}
+				} else return true
+			},
+			addRec(){
+				if (!this.checkInputs()) return false
 				if (this.WORKS_STATE.length==1 && this.WORKS_STATE[0].date==''){
 					this.WORK_DEL(0); //delete 1st empty row
 				}
@@ -52,10 +55,7 @@ import { mapGetters, mapActions} from 'vuex';
 
 			},
 			saveRec() {
-				if (this.TDATE_STATE=='' || this.TPROJNAME_STATE=='' || this.TWORKTYPE_STATE=='' || this.TTIME_STATE=='') {
-					alert('Fill ALL inputs, please!');
-					return false
-				}
+				if (!this.checkInputs()) return false
 
 				this.SAVE_WORK(this.CURNUM_STATE);
 				this.CLEAN_INPUT();
