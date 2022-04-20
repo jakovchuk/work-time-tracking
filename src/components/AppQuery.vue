@@ -36,9 +36,8 @@ export default {
   <div v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:<br></b> from&nbsp;
-      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate"> to&nbsp;
-      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate">&nbsp;
-    <button type="button" name="button" @click="UPDATE_QUERY">Apply</button>&nbsp;
+      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="UPDATE_QUERY"> to&nbsp;
+      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="UPDATE_QUERY">&nbsp;
     <button type="button" name="button" @click="{ this.CLEAR_FILTERDATES(); this.UPDATE_QUERY() }">Reset</button>  </p>
     <table class="query_table">
 			<tr class="header" v-if="PROJTIME_STATE.length > 0 ">
@@ -58,6 +57,9 @@ export default {
 </template>
 
 <style>
+p {
+  font: 1em "Fira Sans", sans-serif;
+}
 .query_table {
 	width: 360px;
 }
