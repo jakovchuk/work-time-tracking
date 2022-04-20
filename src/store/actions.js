@@ -27,6 +27,10 @@ const CLEAR_FILTERDATES = (context) => {
       context.commit('clearFilterDates')
     }
 
+const UPDATE_QUERY = (context) => {
+      context.commit('updateQuery')
+    }
+
 export default {
   CLEAN_INPUT,
   CHANGE_INPUT,
@@ -36,5 +40,6 @@ export default {
   BUTTYPE_CHANGE,
   CURNUM_SET,
   INC_WORKSCHANGE,
-  CLEAR_FILTERDATES
+  CLEAR_FILTERDATES,
+  UPDATE_QUERY
 }

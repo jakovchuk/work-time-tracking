@@ -1,4 +1,5 @@
 const WORKS_STATE = state => state.works;
+const PROJTIME_STATE = state => state.projTime;
 const TDATE_STATE = state => state.tdate;
 const TPROJNAME_STATE = state => state.tprojName;
 const TWORKTYPE_STATE = state => state.tworkType;
@@ -11,6 +12,7 @@ const WORKSCHANGE_STATE = state => state.worksChange;
 
 export default {
   WORKS_STATE,
+  PROJTIME_STATE,
   TDATE_STATE,
   TPROJNAME_STATE,
   TWORKTYPE_STATE,

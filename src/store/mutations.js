@@ -1,3 +1,5 @@
+import { strToSec, secToStr } from '../func'
+
 const CLEAR_INPUT = state => {
       state.tdate = '';
       state.tprojName = '';
@@ -76,6 +78,80 @@ const incWorksChange = state => {
       state.worksChange++
     }
 
+const updateQuery = state => {
+      var pr = [];
+      var projNm = [];
+      for (var j=0; j < state.works.length; j++) {
+        projNm[j] = state.works[j].projName        //create array of Project names
+        }
+      var projNames = Array.from(new Set(projNm)); //remove duplicates in array
+
+      for (j=0; j < projNames.length; j++) {
+        pr[j]=0                                    //init array of total time in sec
+        }
+
+      state.projTime.splice(0,state.projTime.length)
+
+      var sDate = new Date(state.startDate)
+      var eDate = new Date(state.endDate)
+      var wDate = new Date()
+
+      if (state.startDate === '' && state.endDate === ''){
+      if (state.works.length>0) { //count total time in projects
+        for (var i=0; i < state.works.length; i++) {
+          for (j=0; j < projNames.length; j++) {
+            if (state.works[i].projName === projNames[j])
+              { pr[j]+=strToSec(state.works[i].time) }
+            }
+          }
+        }
+      }
+
+      if (state.startDate === '' && state.endDate != ''){
+      if (state.works.length>0) { //count total time in projects
+        for (i=0; i < state.works.length; i++) {
+          for (j=0; j < projNames.length; j++) {
+            wDate = Date.parse(state.works[i].date)
+            if (state.works[i].projName === projNames[j] &&
+                wDate.valueOf() <= eDate.valueOf())
+              { pr[j]+=strToSec(state.works[i].time) }
+            }
+          }
+        }
+      }
+
+      if (state.startDate != '' && state.endDate === ''){
+      if (state.works.length>0) { //count total time in projects
+        for (i=0; i < state.works.length; i++) {
+          for (j=0; j < projNames.length; j++) {
+            wDate = Date.parse(state.works[i].date)
+            if (state.works[i].projName === projNames[j] &&
+                wDate.valueOf() >= sDate.valueOf())
+              { pr[j]+=strToSec(state.works[i].time) }
+            }
+          }
+        }
+      }
+
+      if (state.startDate != '' && state.endDate != ''){
+      if (state.works.length>0) { //count total time in projects
+        for (i=0; i < state.works.length; i++) {
+          for (j=0; j < projNames.length; j++) {
+            wDate = Date.parse(state.works[i].date)
+            if (state.works[i].projName === projNames[j] &&
+                wDate.valueOf() >= sDate.valueOf() &&
+                wDate.valueOf() <= eDate.valueOf())
+              { pr[j]+=strToSec(state.works[i].time) }
+            }
+          }
+        }
+      }
+
+      for (j=0; j < projNames.length; j++) { //fill project time array
+        if (pr[j]>0) {state.projTime.push({ id: state.projTime.length+1, projN: projNames[j], projT: secToStr(pr[j]) })}
+        }
+    }
+
 export default {
   CLEAR_INPUT,
   SET_INPUT,
@@ -91,5 +167,6 @@ export default {
   clearFilterDates,
   changeButType,
   setCurNum,
-  incWorksChange
+  incWorksChange,
+  updateQuery
 }
