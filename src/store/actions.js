@@ -23,6 +23,10 @@ const INC_WORKSCHANGE = (context) => {
       context.commit('incWorksChange')
     }
 
+const CLEAR_FILTERDATES = (context) => {
+      context.commit('clearFilterDates')
+    }
+
 export default {
   CLEAN_INPUT,
   CHANGE_INPUT,
@@ -31,5 +35,6 @@ export default {
   WORK_DEL,
   BUTTYPE_CHANGE,
   CURNUM_SET,
-  INC_WORKSCHANGE
+  INC_WORKSCHANGE,
+  CLEAR_FILTERDATES
 }

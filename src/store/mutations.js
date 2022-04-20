@@ -51,6 +51,19 @@ const updateTime = (state, ttime) => {
       state.ttime = ttime
     }
 
+const updateStartDate = (state, startDate) => {
+      state.startDate = startDate
+    }
+
+const updateEndDate = (state, endDate) => {
+      state.endDate = endDate
+    }
+
+const clearFilterDates = state => {
+      state.startDate = '';
+      state.endDate = ''
+    }
+
 const changeButType = (state, value) => {
       state.butType = value
     }
@@ -73,6 +86,9 @@ export default {
   updateProjName,
   updateWorkType,
   updateTime,
+  updateStartDate,
+  updateEndDate,
+  clearFilterDates,
   changeButType,
   setCurNum,
   incWorksChange

@@ -1,13 +1,12 @@
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { strToSec, secToStr } from '../func'
 
 export default {
   name: 'AppQuery',
   data() {
     return {
-      projTime: [{ id: 0, projN:'', projT:''}],
-      startDate: '', endDate: '', filterVisible: false
+      projTime: [{ id: 0, projN:'', projT:''}]
     }
   },
   created() {
@@ -18,10 +17,21 @@ export default {
   computed: {
     ...mapGetters([
       'WORKS_STATE',
-      'WORKSCHANGE_STATE'
+      'WORKSCHANGE_STATE',
+      'STARTDATE_STATE',
+      'ENDDATE_STATE'
     ])
   },
   methods: {
+    ...mapActions ([
+      'CLEAR_FILTERDATES'
+    ]),
+    updateStartDate(e) {
+      this.$store.commit('updateStartDate', e.target.value)
+    },
+    updateEndDate(e) {
+      this.$store.commit('updateEndDate', e.target.value)
+    },
     updateQuery: function() {
       var pr = [];
       var projNm = [];
@@ -36,11 +46,11 @@ export default {
 
       this.projTime.splice(0,this.projTime.length)
 
-      var sDate = new Date(this.startDate)
-      var eDate = new Date(this.endDate)
+      var sDate = new Date(this.STARTDATE_STATE)
+      var eDate = new Date(this.ENDDATE_STATE)
       var wDate = new Date()
 
-      if (this.startDate==='' && this.endDate===''){
+      if (this.STARTDATE_STATE === '' && this.ENDDATE_STATE === ''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (var i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -51,7 +61,7 @@ export default {
         }
       }
 
-      if (this.startDate==='' && this.endDate!=''){
+      if (this.STARTDATE_STATE === '' && this.ENDDATE_STATE != ''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -64,7 +74,7 @@ export default {
         }
       }
 
-      if (this.startDate!='' && this.endDate===''){
+      if (this.STARTDATE_STATE != '' && this.ENDDATE_STATE === ''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -77,7 +87,7 @@ export default {
         }
       }
 
-      if (this.startDate!='' && this.endDate!=''){
+      if (this.STARTDATE_STATE != '' && this.ENDDATE_STATE != ''){
       if (this.WORKS_STATE.length>0) { //count total time in projects
         for (i=0; i < this.WORKS_STATE.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -102,9 +112,11 @@ export default {
 <template>
   <div v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
 		<h3>Total Project Time:</h3>
-    <p><b>Date filter:<br></b> from <input type="date" name="" v-model="startDate"> to <input type="date" name="" v-model="endDate">&nbsp;
+    <p><b>Date filter:<br></b> from&nbsp;
+      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate"> to&nbsp;
+      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate">&nbsp;
     <button type="button" name="button" @click="updateQuery">Apply</button>&nbsp;
-    <button type="button" name="button" @click="{ this.startDate=''; this.endDate=''; updateQuery() }">Reset</button>  </p>
+    <button type="button" name="button" @click="{ this.CLEAR_FILTERDATES(); updateQuery() }">Reset</button>  </p>
     <table class="query_table">
 			<tr class="header" v-if="projTime.length > 0 ">
 				<td><b>Project Name</b></td>

@@ -5,6 +5,6 @@ import store from './store'
 
 const app = createApp({
   render: () => h(App)
-});
+  });
 app.use(store);
 app.mount("#app");

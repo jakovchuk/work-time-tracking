@@ -8,6 +8,8 @@ export default {
   tprojName: '',
   tworkType: '',
   ttime: '',
+  startDate: '',
+  endDate: '',
   butType: 0,
   curNum: 0,
   worksChange: 0,

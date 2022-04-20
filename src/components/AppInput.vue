@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 	export default {
 		name: 'AppInput',
@@ -37,14 +37,14 @@ import { mapGetters, mapActions} from 'vuex';
 				this.$store.commit('updateTime', e.target.value)
 			},
 			checkInputs(){
-				if (this.TDATE_STATE=='' || this.TPROJNAME_STATE=='' || this.TWORKTYPE_STATE=='' || this.TTIME_STATE=='') {
+				if (this.TDATE_STATE==='' || this.TPROJNAME_STATE==='' || this.TWORKTYPE_STATE==='' || this.TTIME_STATE==='') {
 					alert('Fill ALL inputs, please!');
 					return false
 				} else return true
 			},
 			addRec(){
 				if (!this.checkInputs()) return false
-				if (this.WORKS_STATE.length==1 && this.WORKS_STATE[0].date==''){
+				if (this.WORKS_STATE.length===1 && this.WORKS_STATE[0].date===''){
 					this.WORK_DEL(0); //delete 1st empty row
 				}
 
