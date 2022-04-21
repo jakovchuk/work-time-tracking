@@ -14,19 +14,24 @@ export default {
       'WORKSCHANGE_STATE',
       'STARTDATE_STATE',
       'ENDDATE_STATE',
+      'CUR_PERIOD',
       'PROJTIME_STATE'
     ])
   },
   methods: {
     ...mapActions ([
       'CLEAR_FILTERDATES',
-      'UPDATE_QUERY'
+      'UPDATE_QUERY',
+      'CHOOSE_PERIOD'
     ]),
     updateStartDate(e) {
       this.$store.commit('updateStartDate', e.target.value)
     },
     updateEndDate(e) {
       this.$store.commit('updateEndDate', e.target.value)
+    },
+    updatePeriod(e) {
+      this.$store.commit('updatePeriod', e.target.value)
     }
   }
 }
@@ -35,7 +40,15 @@ export default {
 <template>
   <div v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
 		<h3>Total Project Time:</h3>
-    <p><b>Date filter:<br></b> from&nbsp;
+    <p><b>Date filter:&nbsp;
+      <select name="period" @change="updatePeriod" :value="CUR_PERIOD">
+        <option selected disabled>Choose period</option>
+        <option value="curWeek">Current week</option>
+        <option value="curMonth">Current month</option>
+        <option value="curYear">Current year</option>
+      </select>&nbsp;
+      <button type="button" name="button" @click="CHOOSE_PERIOD">Apply</button>
+      <br></b> from&nbsp;
       <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="UPDATE_QUERY"> to&nbsp;
       <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="UPDATE_QUERY">&nbsp;
     <button type="button" name="button" @click="{ this.CLEAR_FILTERDATES(); this.UPDATE_QUERY() }">Reset</button>  </p>

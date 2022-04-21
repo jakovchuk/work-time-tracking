@@ -31,6 +31,11 @@ const UPDATE_QUERY = (context) => {
       context.commit('updateQuery')
     }
 
+const CHOOSE_PERIOD = (context) => {
+      context.commit('choosePeriod')
+      context.commit('updateQuery')
+    }
+
 export default {
   CLEAN_INPUT,
   CHANGE_INPUT,
@@ -41,5 +46,6 @@ export default {
   CURNUM_SET,
   INC_WORKSCHANGE,
   CLEAR_FILTERDATES,
-  UPDATE_QUERY
+  UPDATE_QUERY,
+  CHOOSE_PERIOD
 }

@@ -13,6 +13,7 @@ export default {
   ttime: '',
   startDate: '',
   endDate: '',
+  period: 'Choose period',
   butType: 0,
   curNum: 0,
   worksChange: 0,

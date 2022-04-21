@@ -6,6 +6,7 @@ const TWORKTYPE_STATE = state => state.tworkType;
 const TTIME_STATE = state => state.ttime;
 const STARTDATE_STATE = state => state.startDate;
 const ENDDATE_STATE = state => state.endDate;
+const CUR_PERIOD = state => state.period;
 const BUTTYPE_STATE = state => state.butType;
 const CURNUM_STATE = state => state.curNum;
 const WORKSCHANGE_STATE = state => state.worksChange;
@@ -19,6 +20,7 @@ export default {
   TTIME_STATE,
   STARTDATE_STATE,
   ENDDATE_STATE,
+  CUR_PERIOD,
   BUTTYPE_STATE,
   CURNUM_STATE,
   WORKSCHANGE_STATE
