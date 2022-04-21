@@ -74,7 +74,7 @@ import { mapGetters, mapActions } from 'vuex';
 </script>
 
 <template>
-	<div>
+	<div class="AppInput">
 		<h3>Input Form:</h3>
 		<table class="my_table">
 			<tr class="header">
@@ -103,10 +103,18 @@ import { mapGetters, mapActions } from 'vuex';
 			<option>Testing...</option>
 			<option>Finding errors and fixing...</option>
 		</datalist>
+		<br>
+		<hr>
 	</div>
 </template>
 
 <style>
+div .AppInput{
+	background-color: #eee;
+	margin-top: -0.5em;
+	padding-top: 0.5em;
+}
+
 .my_table {
 	width: 900px;
 }

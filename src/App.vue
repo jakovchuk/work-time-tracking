@@ -50,9 +50,7 @@ import {mapGetters, mapActions} from 'vuex'
 <template>
 	<div id="app">
 		<h1 style="color:navy;"><b><u>Work Time Tracking</u></b></h1>
-			<AppInput></AppInput>
-		<br>
-		<hr>
+		<AppInput></AppInput>
 		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date != ''">
 		<h3>Data Table:</h3>
 		<table class="my_table">

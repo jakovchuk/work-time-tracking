@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
+  <div class="AppQuery" v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:&nbsp;
       <select name="period" @change="updatePeriod" :value="CUR_PERIOD">
@@ -73,6 +73,11 @@ export default {
 p {
   font: 1em "Fira Sans", sans-serif;
 }
+div .AppQuery{
+	background-color: #eec;
+  margin-top: -0.5em;
+  padding-top: 0.5em;
+}
 .query_table {
 	width: 360px;
 }
@@ -83,5 +88,6 @@ p {
 	width: 80px;
 	border: 1px solid;
 	border-collapse: collapse;
+  background-color: white;
 }
 </style>
