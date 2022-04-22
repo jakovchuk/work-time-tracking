@@ -63,22 +63,20 @@ const updateEndDate = (state, endDate) => {
 
 const updatePeriod = (state, period) => {
       state.period = period
-    }
 
-const choosePeriod = state => {
       var sDate = new Date()
       var eDate = new Date()
       var d = new Date()
       switch (state.period) {
         case 'curWeek':
-          sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
+          sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1)+1)
           eDate.setDate(sDate.getDate() + 6)
           state.startDate = sDate.toISOString().split('T')[0]
           state.endDate = eDate.toISOString().split('T')[0]
           break;
         case 'curMonth':
-          sDate.setDate(1)
-          eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate())
+          sDate.setDate(2)
+          eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate()+1)
           state.startDate = sDate.toISOString().split('T')[0]
           state.endDate = eDate.toISOString().split('T')[0]
           break;
@@ -98,6 +96,10 @@ const choosePeriod = state => {
 const clearFilterDates = state => {
       state.startDate = '';
       state.endDate = '';
+      state.period = 'Choose period'
+    }
+
+const clearPeriod = state => {
       state.period = 'Choose period'
     }
 
@@ -200,8 +202,8 @@ export default {
   updateStartDate,
   updateEndDate,
   updatePeriod,
-  choosePeriod,
   clearFilterDates,
+  clearPeriod,
   changeButType,
   setCurNum,
   incWorksChange,

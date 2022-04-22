@@ -27,12 +27,16 @@ const CLEAR_FILTERDATES = (context) => {
       context.commit('clearFilterDates')
     }
 
+const CLEAR_PERIOD = (context) => {
+      context.commit('clearPeriod')
+    }
+
 const UPDATE_QUERY = (context) => {
       context.commit('updateQuery')
     }
 
-const CHOOSE_PERIOD = (context) => {
-      context.commit('choosePeriod')
+const UPDATE_PERIOD = (context, value) => {
+      context.commit('updatePeriod', value)
       context.commit('updateQuery')
     }
 
@@ -46,6 +50,7 @@ export default {
   CURNUM_SET,
   INC_WORKSCHANGE,
   CLEAR_FILTERDATES,
+  CLEAR_PERIOD,
   UPDATE_QUERY,
-  CHOOSE_PERIOD
+  UPDATE_PERIOD
 }
