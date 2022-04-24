@@ -54,7 +54,7 @@ export default {
 				<td><b>Project Name</b></td>
 				<td><b>Time</b></td>
 			</tr>
-      <transition-group name="table" tag="template">
+      <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
       <tr class="query" v-if="pTime.projN != '' " :key="pTime.id">
 				<td>{{pTime.projN}}</td>

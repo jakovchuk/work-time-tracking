@@ -62,6 +62,7 @@ import {mapGetters, mapActions} from 'vuex'
 				<td>Elapsed Time</td>
 				<td></td>
 			</tr>
+			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
 			<tr v-if="WORKS_STATE.date != '' ">
 				<td class="my_td">{{work.date}}</td>
@@ -70,7 +71,8 @@ import {mapGetters, mapActions} from 'vuex'
 				<td class="my_td">{{work.time}}</td>
 				<td><button @click="editRec(id)">Edit</button> <button @click="deleteRec(id)">- Delete</button></td>
 			</tr>
-			</template>
+		</template>
+		</transition-group>
 		</table>
 		<br>
 		<hr>
@@ -126,5 +128,17 @@ button {
 }
 .query-enter-from, .query-leave-to {
   opacity: 0;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 0.8s ease;
 }
 </style>
