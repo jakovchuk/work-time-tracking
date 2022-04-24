@@ -51,6 +51,7 @@ import {mapGetters, mapActions} from 'vuex'
 	<div id="app">
 		<h1 style="color:navy;"><b><u>Work Time Tracking</u></b></h1>
 		<AppInput></AppInput>
+		<transition name="fade">
 		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date != ''">
 		<h3>Data Table:</h3>
 		<table class="my_table">
@@ -69,12 +70,13 @@ import {mapGetters, mapActions} from 'vuex'
 				<td class="my_td">{{work.time}}</td>
 				<td><button @click="editRec(id)">Edit</button> <button @click="deleteRec(id)">- Delete</button></td>
 			</tr>
-		</template>
+			</template>
 		</table>
 		<br>
 		<hr>
 		</div>
-		<AppQuery></AppQuery>
+		</transition>
+		<transition name="query"><AppQuery></AppQuery></transition>
 	</div>
 </template>
 
@@ -106,5 +108,23 @@ button {
   color: black;
   border: 2px solid navy;
 	border-radius: 2px;
+}
+.fade-enter-active {
+	transition: opacity .5s ease;
+}
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.query-enter-active {
+	transition: opacity 1s ease;
+}
+.query-leave-active {
+  transition: opacity .5s ease;
+}
+.query-enter-from, .query-leave-to {
+  opacity: 0;
 }
 </style>
