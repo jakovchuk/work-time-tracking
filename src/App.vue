@@ -52,7 +52,7 @@ import {mapGetters, mapActions} from 'vuex'
 		<h1 style="color:navy;"><b><u>Work Time Tracking</u></b></h1>
 		<AppInput></AppInput>
 		<transition name="fade">
-		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date != ''">
+		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date !== ''">
 		<h3>Data Table:</h3>
 		<table class="my_table">
 			<tr class="header">
@@ -64,7 +64,7 @@ import {mapGetters, mapActions} from 'vuex'
 			</tr>
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
-			<tr v-if="WORKS_STATE.date != '' ">
+			<tr v-if="WORKS_STATE.date !== '' ">
 				<td class="my_td">{{work.date}}</td>
 				<td class="my_td">{{work.projName}}</td>
 				<td class="my_td">{{work.workType}}</td>

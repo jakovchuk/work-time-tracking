@@ -69,14 +69,14 @@ const updatePeriod = (state, period) => {
       var d = new Date()
       switch (state.period) {
         case 'curWeek':
-          sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1)+1)
+          sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
           eDate.setDate(sDate.getDate() + 6)
           state.startDate = sDate.toISOString().split('T')[0]
           state.endDate = eDate.toISOString().split('T')[0]
           break;
         case 'curMonth':
-          sDate.setDate(2)
-          eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate()+1)
+          sDate.setDate(1)
+          eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate())
           state.startDate = sDate.toISOString().split('T')[0]
           state.endDate = eDate.toISOString().split('T')[0]
           break;
@@ -144,7 +144,7 @@ const updateQuery = state => {
         }
       }
 
-      if (state.startDate === '' && state.endDate != ''){
+      if (state.startDate === '' && state.endDate !== ''){
       if (state.works.length>0) { //count total time in projects
         for (i=0; i < state.works.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -157,7 +157,7 @@ const updateQuery = state => {
         }
       }
 
-      if (state.startDate != '' && state.endDate === ''){
+      if (state.startDate !== '' && state.endDate === ''){
       if (state.works.length>0) { //count total time in projects
         for (i=0; i < state.works.length; i++) {
           for (j=0; j < projNames.length; j++) {
@@ -170,7 +170,7 @@ const updateQuery = state => {
         }
       }
 
-      if (state.startDate != '' && state.endDate != ''){
+      if (state.startDate !== '' && state.endDate !== ''){
       if (state.works.length>0) { //count total time in projects
         for (i=0; i < state.works.length; i++) {
           for (j=0; j < projNames.length; j++) {

@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-  <div class="AppQuery" v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName != ''">
+  <div class="AppQuery" v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName !== ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:&nbsp;
       <select name="period" @change="UPDATE_PERIOD($event.target.value)" :value="CUR_PERIOD">
@@ -46,9 +46,9 @@ export default {
         <option value="curYear">Current year</option>
       </select>
       <br></b> from&nbsp;
-      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="{ this.CLEAR_PERIOD(); this.UPDATE_QUERY() }"> to&nbsp;
-      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="{ this.CLEAR_PERIOD(); this.UPDATE_QUERY() }">&nbsp;
-    <button type="button" name="button" @click="{ this.CLEAR_FILTERDATES(); this.UPDATE_QUERY() }">Reset</button>  </p>
+      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="{ CLEAR_PERIOD(); UPDATE_QUERY() }"> to&nbsp;
+      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="{ CLEAR_PERIOD(); UPDATE_QUERY() }">&nbsp;
+    <button type="button" name="button" @click="{ CLEAR_FILTERDATES(); UPDATE_QUERY() }">Reset</button>  </p>
     <table class="query_table">
 			<tr class="header" v-if="PROJTIME_STATE.length > 0 ">
 				<td><b>Project Name</b></td>
@@ -56,7 +56,7 @@ export default {
 			</tr>
       <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
-      <tr class="query" v-if="pTime.projN != '' " :key="pTime.id">
+      <tr class="query" v-if="pTime.projN !== '' " :key="pTime.id">
 				<td>{{pTime.projN}}</td>
 				<td>{{pTime.projT}}</td>
 			</tr>
