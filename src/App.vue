@@ -9,25 +9,39 @@ import AppQuery from './components/AppQuery.vue'
 import {mapGetters, mapActions} from 'vuex'
 
 	export default {
-		computed: {
+    created() {
+      this.$watch('WORKSCHANGE_STATE', () => {
+        this.UPDATE_QUERY()
+      })
+    },
+    mounted(){
+      if(localStorage.works) {
+        this.INIT_WORKS();
+        this.UPDATE_QUERY()
+      }
+    },
+    computed: {
 			...mapGetters([
-				'WORKS_STATE',
-				'TDATE_STATE',
-				'TPROJNAME_STATE',
-				'TWORKTYPE_STATE',
-				'TTIME_STATE',
-				'BUTTYPE_STATE',
-				'CURNUM_STATE'
+          'WORKS_STATE',
+          'TDATE_STATE',
+          'TPROJNAME_STATE',
+          'TWORKTYPE_STATE',
+          'TTIME_STATE',
+          'BUTTYPE_STATE',
+          'CURNUM_STATE',
+          'WORKSCHANGE_STATE'
 			])
 		},
 		methods: {
 			...mapActions([
-				'WORK_DEL',
-				'CHANGE_INPUT',
-				'BUTTYPE_CHANGE',
-				'CURNUM_SET',
-				'CLEAN_INPUT',
-				'INC_WORKSCHANGE'
+          'WORK_DEL',
+          'CHANGE_INPUT',
+          'BUTTYPE_CHANGE',
+          'CURNUM_SET',
+          'CLEAN_INPUT',
+          'INC_WORKSCHANGE',
+          'UPDATE_QUERY',
+          'INIT_WORKS'
 			]),
 			editRec(row){ 	//edit row
 				this.CHANGE_INPUT(row)

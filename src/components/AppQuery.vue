@@ -3,15 +3,9 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'AppQuery',
-  created() {
-    this.$watch('WORKSCHANGE_STATE', () => {
-      this.UPDATE_QUERY()
-    })
-  },
   computed: {
     ...mapGetters([
       'WORKS_STATE',
-      'WORKSCHANGE_STATE',
       'STARTDATE_STATE',
       'ENDDATE_STATE',
       'CUR_PERIOD',
@@ -20,6 +14,7 @@ export default {
   },
   methods: {
     ...mapActions ([
+      'INIT_WORKS',
       'CLEAR_FILTERDATES',
       'CLEAR_PERIOD',
       'UPDATE_QUERY',
