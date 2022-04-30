@@ -80,7 +80,7 @@ const updatePeriod = (state, period) => {
     switch (state.period) {
         case 'curWeek':
             sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
-            eDate.setDate(sDate.getDate() + 6)
+            eDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1) + 6)
             sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
             eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
 
