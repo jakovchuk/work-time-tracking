@@ -72,32 +72,42 @@ const updateEndDate = (state, endDate) => {
 const updatePeriod = (state, period) => {
     state.period = period
 
+    let sDateParts = []
+    let eDateParts = []
     let sDate = new Date()
     let eDate = new Date()
     let d = new Date()
     switch (state.period) {
         case 'curWeek':
-          sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
-          eDate.setDate(sDate.getDate() + 6)
-          state.startDate = sDate.toISOString().split('T')[0]
-          state.endDate = eDate.toISOString().split('T')[0]
-          break;
+            sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
+            eDate.setDate(sDate.getDate() + 6)
+            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
+            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+
+            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
+            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
+            break;
         case 'curMonth':
-          sDate.setDate(1)
-          eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate())
-          state.startDate = sDate.toISOString().split('T')[0]
-          state.endDate = eDate.toISOString().split('T')[0]
-          break;
+            sDate.setDate(1)
+            eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate())
+            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
+            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+
+            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
+            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
+            break;
         case 'curYear':
-          sDate = new Date(new Date().getFullYear(), 0, 1)
-          sDate.setDate(sDate.getDate()+1)
-          eDate = new Date(new Date().getFullYear()+1, 0, 1)
-          state.startDate = sDate.toISOString().split('T')[0]
-          state.endDate = eDate.toISOString().split('T')[0]
-          break;
+            sDate = new Date(new Date().getFullYear(), 0, 1)
+            eDate = new Date(new Date().getFullYear(), 11, 31)
+            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
+            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+
+            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
+            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
+            break;
         default:
-          state.startDate = ''
-          state.endDate = ''
+            state.startDate = ''
+            state.endDate = ''
     }
 }
 
