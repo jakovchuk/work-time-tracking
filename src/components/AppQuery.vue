@@ -17,6 +17,8 @@ export default {
       'INIT_WORKS',
       'CLEAR_FILTERDATES',
       'CLEAR_PERIOD',
+      'CHANGE_FILTERDATE',
+      'RESET_FILTER',
       'UPDATE_QUERY',
       'UPDATE_PERIOD',
     ]),
@@ -41,9 +43,9 @@ export default {
         <option value="curYear">Current year</option>
       </select>
       <br></b> from&nbsp;
-      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="{ CLEAR_PERIOD(); UPDATE_QUERY() }"> to&nbsp;
-      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="{ CLEAR_PERIOD(); UPDATE_QUERY() }">&nbsp;
-    <button type="button" name="button" @click="{ CLEAR_FILTERDATES(); UPDATE_QUERY() }">Reset</button>  </p>
+      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="CHANGE_FILTERDATE"> to&nbsp;
+      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="CHANGE_FILTERDATE">&nbsp;
+    <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
     <table class="query_table">
 			<tr class="header" v-if="PROJTIME_STATE.length > 0 ">
 				<td><b>Project Name</b></td>

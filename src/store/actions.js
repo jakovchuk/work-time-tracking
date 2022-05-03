@@ -49,6 +49,16 @@ const CLEAR_PERIOD = (context) => {
     context.commit('clearPeriod')
 }
 
+const CHANGE_FILTERDATE = ({ dispatch }) => {
+    dispatch('CLEAR_PERIOD');
+    dispatch('UPDATE_QUERY')
+}
+
+const RESET_FILTER = ({ dispatch }) => {
+    dispatch('CLEAR_FILTERDATES');
+    dispatch('UPDATE_QUERY')
+}
+
 const UPDATE_QUERY = ({ commit, getters }) => {
     // context.commit('updateQuery')
     let projNm = [];
@@ -122,7 +132,6 @@ const UPDATE_QUERY = ({ commit, getters }) => {
     for (let j=0; j < getters.PROJNAMES_STATE.length; j++) {
         if (getters.PR_STATE[j]>0){
             commit('pushProjTime', j)
-            // state.projTime.push({ id: state.projTime.length+1, projN: projNames[j], projT: secToStr(pr[j]) })
         }
     }
 }
@@ -167,6 +176,54 @@ const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {
     dispatch('UPDATE_QUERY');
 }
 
+const ADD_RECORD = ({ getters, dispatch }) => {
+        if (!getters.TEMP_VALUES) {
+            alert('Fill ALL inputs, please!');
+            return false
+        }
+        if (getters.WORKS_STATE.length===1 && getters.WORKS_STATE[0].date==='')
+            dispatch('WORK_DEL', 0); //delete 1st empty row
+
+        dispatch('ADD_WORK');
+        dispatch('CLEAN_INPUT');
+
+        dispatch('INC_WORKSCHANGE');
+}
+
+const EDIT_RECORD = ({ dispatch }, row) => { 	//edit row
+    dispatch('CHANGE_INPUT', row);
+
+    dispatch('BUTTYPE_CHANGE', 1);
+    dispatch('CURNUM_SET', row);
+}
+
+const DELETE_RECORD = ({ dispatch }, row) => { //delete row
+    dispatch('WORK_DEL', row);
+
+    dispatch('CLEAN_INPUT');
+
+    dispatch('BUTTYPE_CHANGE', 0);
+    dispatch('INC_WORKSCHANGE');
+}
+
+const SAVE_RECORD = ({ getters, dispatch }) => {
+    if (!getters.TEMP_VALUES) {
+        alert('Fill ALL inputs, please!');
+        return false
+    }
+
+    dispatch('SAVE_WORK', getters.CURNUM_STATE);
+    dispatch('CLEAN_INPUT');
+
+    dispatch('BUTTYPE_CHANGE', 0);
+    dispatch('INC_WORKSCHANGE');
+}
+
+const CANCEL_EDIT = ({ dispatch }) => {
+    dispatch('CLEAN_INPUT');
+    dispatch('BUTTYPE_CHANGE', 0);
+}
+
 export default {
     INIT_WORKS,
     CLEAN_INPUT,
@@ -179,6 +236,13 @@ export default {
     INC_WORKSCHANGE,
     CLEAR_FILTERDATES,
     CLEAR_PERIOD,
+    CHANGE_FILTERDATE,
+    RESET_FILTER,
     UPDATE_QUERY,
-    UPDATE_PERIOD
+    UPDATE_PERIOD,
+    ADD_RECORD,
+    EDIT_RECORD,
+    DELETE_RECORD,
+    SAVE_RECORD,
+    CANCEL_EDIT
 }

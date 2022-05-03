@@ -23,7 +23,10 @@ import { mapGetters, mapActions } from 'vuex';
 				'WORK_DEL',
 				'BUTTYPE_CHANGE',
 				'CURNUM_SET',
-				'INC_WORKSCHANGE'
+				'INC_WORKSCHANGE',
+        'ADD_RECORD',
+        'SAVE_RECORD',
+        'CANCEL_EDIT'
 			]),
 			updateDate(e){
 				this.$store.commit('updateDate', e.target.value)
@@ -36,36 +39,6 @@ import { mapGetters, mapActions } from 'vuex';
 			},
 			updateTime(e){
 				this.$store.commit('updateTime', e.target.value)
-			},
-      checkInputs(){
-        if (!this.TEMP_VALUES) alert('Fill ALL inputs, please!');
-          return this.TEMP_VALUES
-      },
-			addRec(){
-				if (!this.checkInputs()) return false
-				if (this.WORKS_STATE.length===1 && this.WORKS_STATE[0].date==='')
-					this.WORK_DEL(0); //delete 1st empty row
-
-				this.ADD_WORK();
-				this.CLEAN_INPUT();
-
-				this.INC_WORKSCHANGE();
-
-			},
-			saveRec() {
-				if (!this.checkInputs()) return false
-
-				this.SAVE_WORK(this.CURNUM_STATE);
-				this.CLEAN_INPUT();
-
-				this.BUTTYPE_CHANGE(0);
-				this.INC_WORKSCHANGE();
-
-			},
-			cancelEdit() {
-				this.CLEAN_INPUT();
-
-				this.BUTTYPE_CHANGE(0);
 			}
 		}
 	}
@@ -87,8 +60,8 @@ import { mapGetters, mapActions } from 'vuex';
 				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList"></td>
 				<td><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList"></td>
 				<td><input type="time" :value="TTIME_STATE" @input="updateTime"></td>
-				<td v-if="BUTTYPE_STATE === 0"><button @click="addRec">+ Add record</button></td>
-				<td v-else><button @click="saveRec">Save</button> <button @click="cancelEdit">Cancel</button></td>
+				<td v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD">+ Add record</button></td>
+				<td v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></td>
 			</tr>
 		</table>
 		<datalist id="projNameList">

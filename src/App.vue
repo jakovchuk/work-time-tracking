@@ -41,22 +41,10 @@ import {mapGetters, mapActions} from 'vuex'
           'CLEAN_INPUT',
           'INC_WORKSCHANGE',
           'UPDATE_QUERY',
-          'INIT_WORKS'
-			]),
-			editRec(row){ 	//edit row
-				this.CHANGE_INPUT(row)
-
-				this.BUTTYPE_CHANGE(1);
-				this.CURNUM_SET(row);
-			},
-			deleteRec(row){ //delete row
-				this.WORK_DEL(row);
-
-				this.CLEAN_INPUT();
-
-				this.BUTTYPE_CHANGE(0);
-				this.INC_WORKSCHANGE();
-			}
+          'INIT_WORKS',
+          'EDIT_RECORD',
+          'DELETE_RECORD'
+			])
 		}
 	}
 </script>
@@ -83,7 +71,7 @@ import {mapGetters, mapActions} from 'vuex'
 				<td class="my_td">{{work.projName}}</td>
 				<td class="my_td">{{work.workType}}</td>
 				<td class="my_td">{{work.time}}</td>
-				<td><button @click="editRec(id)">Edit</button> <button @click="deleteRec(id)">- Delete</button></td>
+				<td><button @click="EDIT_RECORD(id)">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></td>
 			</tr>
 		</template>
 		</transition-group>
