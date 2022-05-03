@@ -10,6 +10,7 @@ import { mapGetters, mapActions } from 'vuex';
 				'TPROJNAME_STATE',
 				'TWORKTYPE_STATE',
 				'TTIME_STATE',
+        'TEMP_VALUES',
 				'BUTTYPE_STATE',
 				'CURNUM_STATE'
 			])
@@ -36,17 +37,14 @@ import { mapGetters, mapActions } from 'vuex';
 			updateTime(e){
 				this.$store.commit('updateTime', e.target.value)
 			},
-			checkInputs(){
-				if (this.TDATE_STATE==='' || this.TPROJNAME_STATE==='' || this.TWORKTYPE_STATE==='' || this.TTIME_STATE==='') {
-					alert('Fill ALL inputs, please!');
-					return false
-				} else return true
-			},
+      checkInputs(){
+        if (!this.TEMP_VALUES) alert('Fill ALL inputs, please!');
+          return this.TEMP_VALUES
+      },
 			addRec(){
 				if (!this.checkInputs()) return false
-				if (this.WORKS_STATE.length===1 && this.WORKS_STATE[0].date===''){
+				if (this.WORKS_STATE.length===1 && this.WORKS_STATE[0].date==='')
 					this.WORK_DEL(0); //delete 1st empty row
-				}
 
 				this.ADD_WORK();
 				this.CLEAN_INPUT();

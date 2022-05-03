@@ -1,4 +1,4 @@
-import { strToSec, secToStr, saveToLS } from '@/func'
+import { secToStr } from "@/func";
 
 const CLEAR_INPUT = state => {
     state.tdate = '';
@@ -22,9 +22,6 @@ const WORKS_PUSH = state => {
         workType: state.tworkType,
         time: state.ttime
     });
-    state.works.sort((a, b) => a.date > b.date ? 1 : -1);
-
-    saveToLS(state.works); //save Works to localStorage
 }
 
 const WORK_SAVE = (state, index) => {
@@ -33,13 +30,10 @@ const WORK_SAVE = (state, index) => {
     state.works[index].projName = state.tprojName;
     state.works[index].workType = state.tworkType;
     state.works[index].time = state.ttime;
-
-    saveToLS(state.works); //save Works to localStorage
 }
 
 const WORK_DEL_ROW = (state, index) => {
     state.works.splice(index,1)
-    saveToLS(state.works); //save Works to localStorage
 }
 
 const initWorks = state => {
@@ -71,50 +65,23 @@ const updateEndDate = (state, endDate) => {
 
 const updatePeriod = (state, period) => {
     state.period = period
+}
 
-    let sDateParts = []
-    let eDateParts = []
-    let sDate = new Date()
-    let eDate = new Date()
-    let d = new Date()
-    switch (state.period) {
-        case 'curWeek':
-            sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1))
-            eDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6:1) + 6)
-            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+const setStartDate = (state, sDateParts) => {
+    if (sDateParts !== '')
+    state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0];
+        else state.startDate = ''
+}
 
-            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
-            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
-            break;
-        case 'curMonth':
-            sDate.setDate(1)
-            eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth()+1, 0)).getDate())
-            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
-
-            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
-            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
-            break;
-        case 'curYear':
-            sDate = new Date(new Date().getFullYear(), 0, 1)
-            eDate = new Date(new Date().getFullYear(), 11, 31)
-            sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-            eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
-
-            state.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0]
-            state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0]
-            break;
-        default:
-            state.startDate = ''
-            state.endDate = ''
-    }
+const setEndDate = (state, eDateParts) => {
+    if (eDateParts !== '')
+    state.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0];
+        else state.endDate = ''
 }
 
 const clearFilterDates = state => {
     state.startDate = '';
     state.endDate = '';
-    state.period = 'Choose period'
 }
 
 const clearPeriod = state => {
@@ -133,81 +100,93 @@ const incWorksChange = state => {
     state.worksChange++
 }
 
-const updateQuery = state => {
-    let pr = [];
-    let projNm = [];
-    for (let j=0; j < state.works.length; j++) {
-        projNm[j] = state.works[j].projName        //create array of Project names
-    }
-    let projNames = Array.from(new Set(projNm)); //remove duplicates in array
+// const updateQuery = state => {
+    // let pr = [];
+    // let projNm = [];
+    // for (let j=0; j < state.works.length; j++) {
+    //     projNm[j] = state.works[j].projName        //create array of Project names
+    // }
+    // let projNames = Array.from(new Set(projNm)); //remove duplicates in array
+    //
+    // for (let j=0; j < projNames.length; j++) {
+    //     pr[j]=0                                    //init array of total time in sec
+    // }
+    //
+    // state.projTime.splice(0,state.projTime.length)
+    //
+    // let sDate = new Date(state.startDate)
+    // let eDate = new Date(state.endDate)
+    // let wDate = new Date()
+    //
+    // if (state.startDate === '' && state.endDate === ''){
+    //     if (state.works.length>0) { //count total time in projects
+    //         for (let i=0; i < state.works.length; i++) {
+    //             for (let j=0; j < projNames.length; j++) {
+    //                 if (state.works[i].projName === projNames[j])
+    //                     { pr[j]+=strToSec(state.works[i].time) }
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // if (state.startDate === '' && state.endDate !== ''){
+    //     if (state.works.length>0) { //count total time in projects
+    //         for (let i=0; i < state.works.length; i++) {
+    //             for (let j=0; j < projNames.length; j++) {
+    //                 wDate = Date.parse(state.works[i].date)
+    //                 if (state.works[i].projName === projNames[j] &&
+    //                     wDate.valueOf() <= eDate.valueOf())
+    //                     { pr[j]+=strToSec(state.works[i].time) }
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // if (state.startDate !== '' && state.endDate === ''){
+    //     if (state.works.length>0) { //count total time in projects
+    //         for (let i=0; i < state.works.length; i++) {
+    //             for (let j=0; j < projNames.length; j++) {
+    //                 wDate = Date.parse(state.works[i].date)
+    //                 if (state.works[i].projName === projNames[j] &&
+    //                     wDate.valueOf() >= sDate.valueOf())
+    //                     { pr[j]+=strToSec(state.works[i].time) }
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // if (state.startDate !== '' && state.endDate !== ''){
+    //     if (state.works.length>0) { //count total time in projects
+    //         for (let i=0; i < state.works.length; i++) {
+    //             for (let j=0; j < projNames.length; j++) {
+    //                 wDate = Date.parse(state.works[i].date)
+    //                 if (state.works[i].projName === projNames[j] &&
+    //                     wDate.valueOf() >= sDate.valueOf() &&
+    //                     wDate.valueOf() <= eDate.valueOf())
+    //                     { pr[j]+=strToSec(state.works[i].time) }
+    //             }
+    //         }
+    //     }
+    // }
+    //
+    // //fill projectTime array
+    // for (let j=0; j < projNames.length; j++) {
+    //     if (pr[j]>0){
+    //         state.projTime.push({ id: state.projTime.length+1, projN: projNames[j], projT: secToStr(pr[j]) })
+    //     }
+    //   }
+// }
 
-    for (let j=0; j < projNames.length; j++) {
-        pr[j]=0                                    //init array of total time in sec
-    }
-
+const clearProjTime = state => {
     state.projTime.splice(0,state.projTime.length)
+}
 
-    let sDate = new Date(state.startDate)
-    let eDate = new Date(state.endDate)
-    let wDate = new Date()
+const pushProjTime = (state, j) => {
+    state.projTime.push({ id: state.projTime.length+1, projN: state.projNames[j], projT: secToStr(state.pr[j]) })
+}
 
-    if (state.startDate === '' && state.endDate === ''){
-        if (state.works.length>0) { //count total time in projects
-            for (let i=0; i < state.works.length; i++) {
-                for (let j=0; j < projNames.length; j++) {
-                    if (state.works[i].projName === projNames[j])
-                        { pr[j]+=strToSec(state.works[i].time) }
-                }
-            }
-        }
-    }
-
-    if (state.startDate === '' && state.endDate !== ''){
-        if (state.works.length>0) { //count total time in projects
-            for (let i=0; i < state.works.length; i++) {
-                for (let j=0; j < projNames.length; j++) {
-                    wDate = Date.parse(state.works[i].date)
-                    if (state.works[i].projName === projNames[j] &&
-                        wDate.valueOf() <= eDate.valueOf())
-                        { pr[j]+=strToSec(state.works[i].time) }
-                }
-            }
-        }
-    }
-
-    if (state.startDate !== '' && state.endDate === ''){
-        if (state.works.length>0) { //count total time in projects
-            for (let i=0; i < state.works.length; i++) {
-                for (let j=0; j < projNames.length; j++) {
-                    wDate = Date.parse(state.works[i].date)
-                    if (state.works[i].projName === projNames[j] &&
-                        wDate.valueOf() >= sDate.valueOf())
-                        { pr[j]+=strToSec(state.works[i].time) }
-                }
-            }
-        }
-    }
-
-    if (state.startDate !== '' && state.endDate !== ''){
-        if (state.works.length>0) { //count total time in projects
-            for (let i=0; i < state.works.length; i++) {
-                for (let j=0; j < projNames.length; j++) {
-                    wDate = Date.parse(state.works[i].date)
-                    if (state.works[i].projName === projNames[j] &&
-                        wDate.valueOf() >= sDate.valueOf() &&
-                        wDate.valueOf() <= eDate.valueOf())
-                        { pr[j]+=strToSec(state.works[i].time) }
-                }
-            }
-        }
-    }
-
-    //fill projectTime array
-    for (let j=0; j < projNames.length; j++) {
-        if (pr[j]>0){
-            state.projTime.push({ id: state.projTime.length+1, projN: projNames[j], projT: secToStr(pr[j]) })
-        }
-      }
+const setProjNames = (state, array) => {
+    state.projNames = Array.from(new Set(array));
 }
 
 export default {
@@ -224,10 +203,14 @@ export default {
     updateStartDate,
     updateEndDate,
     updatePeriod,
+    setStartDate,
+    setEndDate,
     clearFilterDates,
     clearPeriod,
     changeButType,
     setCurNum,
     incWorksChange,
-    updateQuery
+    clearProjTime,
+    pushProjTime,
+    setProjNames
 }
