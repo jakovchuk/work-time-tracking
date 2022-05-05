@@ -12,6 +12,8 @@ import { mapGetters, mapActions } from 'vuex';
 				'TTIME_STATE',
         'TEMP_VALUES',
 				'BUTTYPE_STATE',
+        'TIMERBUTTYPE_STATE',
+        'ADDBUTTON_DIS_STATE',
 				'CURNUM_STATE'
 			])
 		},
@@ -26,7 +28,9 @@ import { mapGetters, mapActions } from 'vuex';
 				'INC_WORKSCHANGE',
         'ADD_RECORD',
         'SAVE_RECORD',
-        'CANCEL_EDIT'
+        'CANCEL_EDIT',
+        'START_TIMER',
+        'STOP_TIMER'
 			]),
 			updateDate(e){
 				this.$store.commit('updateDate', e.target.value)
@@ -47,21 +51,26 @@ import { mapGetters, mapActions } from 'vuex';
 <template>
 	<div class="AppInput">
 		<h3>Input Form:</h3>
-		<table class="my_table">
+		<table class="my_inputtable">
 			<tr class="header">
 				<td>Date</td>
 				<td>Project Name</td>
 				<td>Type of Work</td>
 				<td>Elapsed Time</td>
 				<td></td>
+        <td></td>
 			</tr>
 			<tr>
 				<td><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
 				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList"></td>
 				<td><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList"></td>
-				<td><input type="time" :value="TTIME_STATE" @input="updateTime"></td>
-				<td v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD">+ Add record</button></td>
+				<td><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></td>
+				<td v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></td>
 				<td v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></td>
+        <span v-if="BUTTYPE_STATE === 0">
+        <td v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">> Start Timer</button></td>
+        <td v-else><button id="stoptimer" @click="STOP_TIMER">|| Stop Timer</button></td>
+        </span>
 			</tr>
 		</table>
 		<datalist id="projNameList">
@@ -86,10 +95,10 @@ div .AppInput{
 	padding-top: 0.5em;
 }
 
-.my_table {
-	width: 900px;
+.my_inputtable {
+	width: 1080px;
 }
-.my_table td{
+.my_inputtable td{
 	width: 160px;
 }
 </style>

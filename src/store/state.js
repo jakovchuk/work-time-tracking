@@ -13,10 +13,13 @@ export default {
     tprojName: '',
     tworkType: '',
     ttime: '',
+    curTime: 0,
     startDate: '',
     endDate: '',
     period: 'Choose period',
     butType: 0,
+    timerButType: 0,
+    addButtonDis: false,
     curNum: 0,
     worksChange: 0,
 }

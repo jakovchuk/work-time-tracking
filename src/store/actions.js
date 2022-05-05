@@ -1,5 +1,7 @@
 import {saveToLS, strToSec } from "@/func";
 
+var interval
+
 const INIT_WORKS = context => {
     context.commit('initWorks')
 }
@@ -177,7 +179,7 @@ const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {
 }
 
 const ADD_RECORD = ({ getters, dispatch }) => {
-        if (!getters.TEMP_VALUES) {
+        if (!getters.TEMP_VALUES || getters.TTIME_STATE==='00:00') {
             alert('Fill ALL inputs, please!');
             return false
         }
@@ -207,7 +209,7 @@ const DELETE_RECORD = ({ dispatch }, row) => { //delete row
 }
 
 const SAVE_RECORD = ({ getters, dispatch }) => {
-    if (!getters.TEMP_VALUES) {
+    if (!getters.TEMP_VALUES || getters.TTIME_STATE==='00:00') {
         alert('Fill ALL inputs, please!');
         return false
     }
@@ -222,6 +224,28 @@ const SAVE_RECORD = ({ getters, dispatch }) => {
 const CANCEL_EDIT = ({ dispatch }) => {
     dispatch('CLEAN_INPUT');
     dispatch('BUTTYPE_CHANGE', 0);
+}
+
+const START_TIMER = ({ commit }) => {
+    commit('setCurrentDate');
+    commit('changeTimerButType', 1);
+    commit('setAddButtonDis', true);
+    commit('changeTime');
+    interval = setInterval(() => { commit('changeTime') }, 1000);
+}
+
+const STOP_TIMER = ({ commit }) => {
+    commit('changeTimerButType', 0);
+    commit('setAddButtonDis', false);
+    commit('resetCurTime');
+    clearInterval(interval);
+}
+
+const CLEAR_TABLE = ({ commit, getters }) => {
+    if (confirm('Do you want to CLEAR TABLE?')) {
+        commit('clearTable');
+        saveToLS(getters.WORKS_STATE); //save Works to localStorage
+    }
 }
 
 export default {
@@ -244,5 +268,8 @@ export default {
     EDIT_RECORD,
     DELETE_RECORD,
     SAVE_RECORD,
-    CANCEL_EDIT
+    CANCEL_EDIT,
+    START_TIMER,
+    STOP_TIMER,
+    CLEAR_TABLE
 }

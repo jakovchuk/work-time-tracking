@@ -11,6 +11,8 @@ const STARTDATE_STATE = state => state.startDate;
 const ENDDATE_STATE = state => state.endDate;
 const CUR_PERIOD = state => state.period;
 const BUTTYPE_STATE = state => state.butType;
+const TIMERBUTTYPE_STATE = state => state.timerButType;
+const ADDBUTTON_DIS_STATE = state => state.addButtonDis;
 const CURNUM_STATE = state => state.curNum;
 const WORKSCHANGE_STATE = state => state.worksChange;
 const PROJNAMES_STATE = state => state.projNames;
@@ -28,6 +30,8 @@ export default {
   ENDDATE_STATE,
   CUR_PERIOD,
   BUTTYPE_STATE,
+  TIMERBUTTYPE_STATE,
+  ADDBUTTON_DIS_STATE,
   CURNUM_STATE,
   WORKSCHANGE_STATE,
   PROJNAMES_STATE,

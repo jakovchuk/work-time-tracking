@@ -92,6 +92,14 @@ const changeButType = (state, value) => {
     state.butType = value
 }
 
+const changeTimerButType = (state, value) => {
+    state.timerButType = value
+}
+
+const setAddButtonDis = (state, value) => {
+    state.addButtonDis = value
+}
+
 const setCurNum = (state, value) => {
     state.curNum = value
 }
@@ -110,6 +118,28 @@ const pushProjTime = (state, j) => {
 
 const setProjNames = (state, array) => {
     state.projNames = Array.from(new Set(array));
+}
+
+const setCurrentDate = state => {
+    let DateParts = []
+    let d = new Date()
+
+    d.setDate(d.getDate());
+    DateParts = d.toLocaleDateString('uk-UA').split('.')
+    state.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0];
+}
+
+const changeTime = state => {
+    state.curTime ++;
+    state.ttime = secToStr(state.curTime)
+}
+
+const resetCurTime = state => {
+    state.curTime = 0;
+}
+
+const clearTable = state => {
+    state.works.splice(0, state.works.length)
 }
 
 export default {
@@ -131,9 +161,15 @@ export default {
     clearFilterDates,
     clearPeriod,
     changeButType,
+    changeTimerButType,
+    setAddButtonDis,
     setCurNum,
     incWorksChange,
     clearProjTime,
     pushProjTime,
-    setProjNames
+    setProjNames,
+    setCurrentDate,
+    changeTime,
+    resetCurTime,
+    clearTable
 }
