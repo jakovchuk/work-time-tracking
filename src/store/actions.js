@@ -1,6 +1,6 @@
 import {saveToLS, strToSec } from "@/func";
 
-var interval
+var interval = null;
 
 const INIT_WORKS = context => {
     context.commit('initWorks')
@@ -200,12 +200,14 @@ const EDIT_RECORD = ({ dispatch }, row) => { 	//edit row
 }
 
 const DELETE_RECORD = ({ dispatch }, row) => { //delete row
-    dispatch('WORK_DEL', row);
+    if (confirm('Do you want to DELETE row?')) {
+        dispatch('WORK_DEL', row);
 
-    dispatch('CLEAN_INPUT');
+        dispatch('CLEAN_INPUT');
 
-    dispatch('BUTTYPE_CHANGE', 0);
-    dispatch('INC_WORKSCHANGE');
+        dispatch('BUTTYPE_CHANGE', 0);
+        dispatch('INC_WORKSCHANGE');
+    }
 }
 
 const SAVE_RECORD = ({ getters, dispatch }) => {
@@ -232,11 +234,7 @@ const START_TIMER = ({ commit }) => {
     commit('setAddButtonDis', true);
     commit('changeTime');
     interval = setInterval(() => { commit('changeTime') }, 1000);
-    commit('focusIn');
-}
-
-const FOCUS_OUT = ({ commit }) => {
-    commit('focusOut');
+    commit('focusInputChange');
 }
 
 const STOP_TIMER = ({ commit }) => {
@@ -276,6 +274,5 @@ export default {
     CANCEL_EDIT,
     START_TIMER,
     STOP_TIMER,
-    CLEAR_TABLE,
-    FOCUS_OUT
+    CLEAR_TABLE
 }

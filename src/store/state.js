@@ -22,5 +22,5 @@ export default {
     addButtonDis: false,
     curNum: 0,
     worksChange: 0,
-    focusInput: false
+    focusInput: 0
 }

@@ -48,14 +48,14 @@ export default {
     <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
     <table class="query_table">
 			<tr class="header" v-if="PROJTIME_STATE.length > 0 ">
-				<td><b>Project Name</b></td>
-				<td><b>Time</b></td>
+				<td class="tablecol"><b>Project Name</b></td>
+				<td class="time"><b>Time</b></td>
 			</tr>
       <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
-      <tr class="query" v-if="pTime.projN !== '' " :key="pTime.id">
-				<td>{{pTime.projN}}</td>
-				<td>{{pTime.projT}}</td>
+      <tr v-if="pTime.projN !== '' " :key="pTime.id">
+				<td class="tablecol bordercell">{{pTime.projN}}</td>
+				<td class="time bordercell">{{pTime.projT}}</td>
 			</tr>
       </template>
       </transition-group>
@@ -75,13 +75,15 @@ div .AppQuery{
   padding-top: 0.5em;
 }
 .query_table {
-	width: 360px;
+	width: 300px;
 }
-.query_table td{
-	width: 80px;
+.tablecol {
+  width: 220px;
 }
-.query td {
-	width: 80px;
+.time {
+  width: 80px;
+}
+.bordercell {
 	border: 1px solid;
 	border-collapse: collapse;
   background-color: white;

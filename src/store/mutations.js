@@ -141,12 +141,8 @@ const clearTable = state => {
     state.works.splice(0, state.works.length)
 }
 
-const focusIn = state => {
-    state.focusInput = true;
-}
-
-const focusOut = state => {
-    state.focusInput = false;
+const focusInputChange = state => {
+    state.focusInput++;
 }
 
 export default {
@@ -179,6 +175,5 @@ export default {
     changeTime,
     resetCurTime,
     clearTable,
-    focusIn,
-    focusOut
+    focusInputChange
 }

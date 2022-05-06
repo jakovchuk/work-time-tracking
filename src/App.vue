@@ -62,19 +62,19 @@ import {mapGetters, mapActions} from 'vuex'
       <button @click="CLEAR_TABLE">Clear Table</button>
 		<table class="my_table">
 			<tr class="header">
-				<td>Date</td>
-				<td>Project Name</td>
-				<td>Type of Work</td>
-				<td>Elapsed Time</td>
-				<td></td>
+				<td class="date">Date</td>
+				<td class="tablecol">Project Name</td>
+				<td class="tablecol">Type of Work</td>
+				<td class="time">Elapsed Time</td>
+				<td class="tablerow"></td>
 			</tr>
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
 			<tr v-if="WORKS_STATE.date !== '' ">
-				<td class="my_td">{{ work.date }}</td>
-				<td class="my_td">{{ work.projName }}</td>
-				<td class="my_td">{{ work.workType }}</td>
-				<td class="my_td">{{ work.time }}</td>
+				<td class="date bordercell">{{ work.date }}</td>
+				<td class="tablecol bordercell">{{ work.projName }}</td>
+				<td class="tablecol bordercell">{{ work.workType }}</td>
+				<td class="time bordercell">{{ work.time }}</td>
 				<td><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></td>
 			</tr>
       </template>
@@ -89,7 +89,7 @@ import {mapGetters, mapActions} from 'vuex'
 </template>
 
 <style>
-body { zoom: 120%; }
+body { zoom: 115%; }
 h3{
     font: bold 1.2em "Fira Sans", sans-serif;
 		color: maroon;
@@ -99,13 +99,18 @@ h3{
 .my_table {
 	width: 900px;
 }
-.my_table td{
-	width: 160px;
-}
-.my_td {
-	width: 160px;
+.bordercell {
 	border: 1px solid;
 	border-collapse: collapse;
+}
+.tablecol {
+  width: 220px;
+}
+.date {
+  width: 120px;
+}
+.time {
+  width: 80px;
 }
 .header td{
 	font: bold 1em "Fira Sans", sans-serif;

@@ -3,7 +3,12 @@ import { mapGetters, mapActions } from 'vuex';
 
 	export default {
 		name: 'AppInput',
-		computed: {
+    created() {
+      this.$watch('FOCUSINPUT_STATE', () => {
+        this.$refs.projName.focus()
+      })
+    },
+    computed: {
 			...mapGetters([
 				'WORKS_STATE',
 				'TDATE_STATE',
@@ -55,23 +60,23 @@ import { mapGetters, mapActions } from 'vuex';
 		<h3>Input Form:</h3>
 		<table class="my_inputtable">
 			<tr class="header">
-				<td>Date</td>
-				<td>Project Name</td>
-				<td>Type of Work</td>
-				<td>Elapsed Time</td>
-				<td></td>
-        <td></td>
+				<td class="date">Date</td>
+				<td class="tablecol">Project Name</td>
+				<td class="tablecol">Type of Work</td>
+				<td class="time">Elapsed Time</td>
+				<td class="tablecol"></td>
+        <td class="tablecol"></td>
 			</tr>
 			<tr>
-				<td><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
-				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" v-focus="FOCUSINPUT_STATE" @focusout="FOCUS_OUT"></td>
-				<td><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList"></td>
-				<td><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></td>
-				<td v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></td>
-				<td v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></td>
+				<td class="date"><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
+				<td class="tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></td>
+				<td class="tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList" size="26"></td>
+				<td class="time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></td>
+				<td class="tablecol" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></td>
+				<td class="tablecol" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></td>
         <span v-if="BUTTYPE_STATE === 0">
-        <td v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">> Start Timer</button></td>
-        <td v-else><button id="stoptimer" @click="STOP_TIMER">|| Stop Timer</button></td>
+        <td class="tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">> Start Timer</button></td>
+        <td class="tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">|| Stop Timer</button></td>
         </span>
 			</tr>
 		</table>
@@ -100,7 +105,13 @@ div .AppInput{
 .my_inputtable {
 	width: 1080px;
 }
-.my_inputtable td{
-	width: 160px;
+.tablecol {
+	width: 220px;
+}
+.date {
+  width: 120px;
+}
+.time {
+  width: 80px;
 }
 </style>
