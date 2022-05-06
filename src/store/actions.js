@@ -232,6 +232,11 @@ const START_TIMER = ({ commit }) => {
     commit('setAddButtonDis', true);
     commit('changeTime');
     interval = setInterval(() => { commit('changeTime') }, 1000);
+    commit('focusIn');
+}
+
+const FOCUS_OUT = ({ commit }) => {
+    commit('focusOut');
 }
 
 const STOP_TIMER = ({ commit }) => {
@@ -271,5 +276,6 @@ export default {
     CANCEL_EDIT,
     START_TIMER,
     STOP_TIMER,
-    CLEAR_TABLE
+    CLEAR_TABLE,
+    FOCUS_OUT
 }

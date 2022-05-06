@@ -121,11 +121,10 @@ const setProjNames = (state, array) => {
 }
 
 const setCurrentDate = state => {
-    let DateParts = []
     let d = new Date()
 
     d.setDate(d.getDate());
-    DateParts = d.toLocaleDateString('uk-UA').split('.')
+    let DateParts = d.toLocaleDateString('uk-UA').split('.')
     state.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0];
 }
 
@@ -140,6 +139,14 @@ const resetCurTime = state => {
 
 const clearTable = state => {
     state.works.splice(0, state.works.length)
+}
+
+const focusIn = state => {
+    state.focusInput = true;
+}
+
+const focusOut = state => {
+    state.focusInput = false;
 }
 
 export default {
@@ -171,5 +178,7 @@ export default {
     setCurrentDate,
     changeTime,
     resetCurTime,
-    clearTable
+    clearTable,
+    focusIn,
+    focusOut
 }

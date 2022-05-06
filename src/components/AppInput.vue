@@ -14,7 +14,8 @@ import { mapGetters, mapActions } from 'vuex';
 				'BUTTYPE_STATE',
         'TIMERBUTTYPE_STATE',
         'ADDBUTTON_DIS_STATE',
-				'CURNUM_STATE'
+				'CURNUM_STATE',
+        'FOCUSINPUT_STATE'
 			])
 		},
 		methods: {
@@ -30,7 +31,8 @@ import { mapGetters, mapActions } from 'vuex';
         'SAVE_RECORD',
         'CANCEL_EDIT',
         'START_TIMER',
-        'STOP_TIMER'
+        'STOP_TIMER',
+        'FOCUS_OUT'
 			]),
 			updateDate(e){
 				this.$store.commit('updateDate', e.target.value)
@@ -62,7 +64,7 @@ import { mapGetters, mapActions } from 'vuex';
 			</tr>
 			<tr>
 				<td><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
-				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList"></td>
+				<td><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" v-focus="FOCUSINPUT_STATE" @focusout="FOCUS_OUT"></td>
 				<td><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList"></td>
 				<td><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></td>
 				<td v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></td>

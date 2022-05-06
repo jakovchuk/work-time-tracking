@@ -71,13 +71,13 @@ import {mapGetters, mapActions} from 'vuex'
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
 			<tr v-if="WORKS_STATE.date !== '' ">
-				<td class="my_td">{{work.date}}</td>
-				<td class="my_td">{{work.projName}}</td>
-				<td class="my_td">{{work.workType}}</td>
-				<td class="my_td">{{work.time}}</td>
+				<td class="my_td">{{ work.date }}</td>
+				<td class="my_td">{{ work.projName }}</td>
+				<td class="my_td">{{ work.workType }}</td>
+				<td class="my_td">{{ work.time }}</td>
 				<td><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></td>
 			</tr>
-		</template>
+      </template>
 		</transition-group>
 		</table>
 		<br>

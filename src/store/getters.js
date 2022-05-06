@@ -17,6 +17,7 @@ const CURNUM_STATE = state => state.curNum;
 const WORKSCHANGE_STATE = state => state.worksChange;
 const PROJNAMES_STATE = state => state.projNames;
 const PR_STATE = state => state.pr;
+const FOCUSINPUT_STATE = state => state.focusInput;
 
 export default {
   WORKS_STATE,
@@ -35,5 +36,6 @@ export default {
   CURNUM_STATE,
   WORKSCHANGE_STATE,
   PROJNAMES_STATE,
-  PR_STATE
+  PR_STATE,
+  FOCUSINPUT_STATE
 }
