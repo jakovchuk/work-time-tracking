@@ -38,6 +38,7 @@ export default {
     <p><b>Date filter:&nbsp;
       <select name="period" @change="UPDATE_PERIOD($event.target.value)" :value="CUR_PERIOD">
         <option selected disabled>Choose period</option>
+        <option value="Today">Today</option>
         <option value="curWeek">Current week</option>
         <option value="curMonth">Current month</option>
         <option value="curYear">Current year</option>
@@ -46,20 +47,20 @@ export default {
       <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="CHANGE_FILTERDATE"> to&nbsp;
       <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="CHANGE_FILTERDATE">&nbsp;
     <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
-    <table class="query_table">
-			<tr class="header" v-if="PROJTIME_STATE.length > 0 ">
-				<td class="tablecol"><b>Project Name</b></td>
-				<td class="time"><b>Time</b></td>
-			</tr>
+    <div class="table">
+			<div class="row header" v-if="PROJTIME_STATE.length > 0 ">
+				<div class="cell tablecol">Project Name</div>
+				<div class="cell time">Time</div>
+			</div>
       <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
-      <tr v-if="pTime.projN !== '' " :key="pTime.id">
-				<td class="tablecol bordercell">{{pTime.projN}}</td>
-				<td class="time bordercell">{{pTime.projT}}</td>
-			</tr>
+      <div class="row" v-if="pTime.projN !== '' " :key="pTime.id">
+				<div class="bordercell tablecol">{{pTime.projN}}</div>
+				<div class="bordercell time">{{pTime.projT}}</div>
+			</div>
       </template>
       </transition-group>
-    </table>
+    </div>
     <br>
     <hr>
   </div>

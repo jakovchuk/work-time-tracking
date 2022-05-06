@@ -58,28 +58,26 @@ import { mapGetters, mapActions } from 'vuex';
 <template>
 	<div class="AppInput">
 		<h3>Input Form:</h3>
-		<table class="my_inputtable">
-			<tr class="header">
-				<td class="date">Date</td>
-				<td class="tablecol">Project Name</td>
-				<td class="tablecol">Type of Work</td>
-				<td class="time">Elapsed Time</td>
-				<td class="tablecol"></td>
-        <td class="tablecol"></td>
-			</tr>
-			<tr>
-				<td class="date"><input type="date" :value="TDATE_STATE" @input="updateDate"></td>
-				<td class="tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></td>
-				<td class="tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList" size="26"></td>
-				<td class="time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></td>
-				<td class="tablecol" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></td>
-				<td class="tablecol" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></td>
+		<div class="table">
+			<div class="row header">
+				<div class="cell date">Date</div>
+				<div class="cell tablecol">Project Name</div>
+				<div class="cell tablecol">Description</div>
+				<div class="cell time">Elapsed Time</div>
+			</div>
+			<div class="row">
+				<div class="cell date"><input type="date" :value="TDATE_STATE" @input="updateDate"></div>
+				<div class="cell tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></div>
+				<div class="cell tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList" size="26"></div>
+				<div class="cell time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></div>
+				<div class="cell date" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></div>
+				<div class="cell date" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></div>
         <span v-if="BUTTYPE_STATE === 0">
-        <td class="tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">> Start Timer</button></td>
-        <td class="tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">|| Stop Timer</button></td>
+          <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button></div>
+          <div class="cell tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button></div>
         </span>
-			</tr>
-		</table>
+			</div>
+		</div>
 		<datalist id="projNameList">
 			<option>Project 1</option>
 			<option>Project 2</option>
@@ -102,16 +100,39 @@ div .AppInput{
 	padding-top: 0.5em;
 }
 
-.my_inputtable {
-	width: 1080px;
+.header {
+  font: bold .9em "Tahoma", sans-serif;
+  color: teal;
 }
+
 .tablecol {
 	width: 220px;
 }
+
 .date {
   width: 120px;
 }
+
 .time {
   width: 80px;
+}
+
+.table {
+  display: table;
+  border: 0px solid black;
+  margin: 5px;
+  padding: 0px;
+  width:100%
+}
+.cell {
+  display: table-cell;
+}
+.cell {
+  display:inline-block;
+  padding:3px;
+  margin:1px;
+}
+.row {
+  display: table-row;
 }
 </style>

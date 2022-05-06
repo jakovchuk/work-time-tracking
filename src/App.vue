@@ -58,28 +58,26 @@ import {mapGetters, mapActions} from 'vuex'
 		<transition name="fade">
 		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date !== ''">
 		<h3>Data Table:</h3>
-      <br>
-      <button @click="CLEAR_TABLE">Clear Table</button>
-		<table class="my_table">
-			<tr class="header">
-				<td class="date">Date</td>
-				<td class="tablecol">Project Name</td>
-				<td class="tablecol">Type of Work</td>
-				<td class="time">Elapsed Time</td>
-				<td class="tablerow"></td>
-			</tr>
+		<div class="table">
+			<div class="row header">
+				<div class="cell date">Date</div>
+				<div class="cell tablecol">Project Name</div>
+				<div class="cell tablecol">Description</div>
+				<div class="cell time">Elapsed Time</div>
+				<div class="cell tablerow"><button @click="CLEAR_TABLE">Clear Table</button></div>
+			</div>
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
-			<tr v-if="WORKS_STATE.date !== '' ">
-				<td class="date bordercell">{{ work.date }}</td>
-				<td class="tablecol bordercell">{{ work.projName }}</td>
-				<td class="tablecol bordercell">{{ work.workType }}</td>
-				<td class="time bordercell">{{ work.time }}</td>
-				<td><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></td>
-			</tr>
+			<div class="row" v-if="WORKS_STATE.date !== '' ">
+				<div class="bordercell date">{{ work.date }}</div>
+				<div class="bordercell tablecol">{{ work.projName }}</div>
+				<div class="bordercell tablecol">{{ work.workType }}</div>
+				<div class="bordercell time">{{ work.time }}</div>
+				<div class="cell date"><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
+			</div>
       </template>
 		</transition-group>
-		</table>
+		</div>
 		<br>
 		<hr>
 		</div>
@@ -91,18 +89,12 @@ import {mapGetters, mapActions} from 'vuex'
 <style>
 body { zoom: 115%; }
 h3{
-    font: bold 1.2em "Fira Sans", sans-serif;
+    font: bold 1.2em "Tahoma", sans-serif;
 		color: maroon;
 		padding: 0;
 		margin: 0;
 }
-.my_table {
-	width: 900px;
-}
-.bordercell {
-	border: 1px solid;
-	border-collapse: collapse;
-}
+
 .tablecol {
   width: 220px;
 }
@@ -112,15 +104,48 @@ h3{
 .time {
   width: 80px;
 }
-.header td{
-	font: bold 1em "Fira Sans", sans-serif;
+.header {
+	font: bold .9em "Tahoma", sans-serif;
 	color: teal;
+}
+.table {
+  display: table;
+  border: 0px solid black;
+  margin: 5px;
+  padding: 0px;
+  width:100%
+}
+.cell {
+  display: table-cell;
+  border: 1px solid transparent;
+  border-collapse: collapse;
+  border-radius: 2px;
+}
+.cell {
+  display:inline-block;
+  padding:3px;
+  margin:0px 1px;
+}
+.bordercell {
+  display: table-cell;
+  border: 1px solid;
+  border-collapse: collapse;
+  border-radius: 2px;
+}
+.bordercell {
+  display:inline-block;
+  padding:3px;
+  margin:0px 1px;
+}
+.row {
+  display: table-row;
 }
 button {
   background-color: white;
   color: black;
   border: 2px solid navy;
 	border-radius: 2px;
+  padding: 1px 7px;
 }
 button:disabled {
   background-color: #d5d5d5;

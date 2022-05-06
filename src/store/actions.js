@@ -146,7 +146,15 @@ const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {
     let sDate = new Date()
     let eDate = new Date()
     let d = new Date()
-    if (getters.CUR_PERIOD === 'curWeek') {
+    if (getters.CUR_PERIOD === 'Today') {
+        sDate.setDate(d.getDate())
+        eDate.setDate(d.getDate())
+        sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
+        eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+
+        commit('setStartDate', sDateParts);
+        commit('setEndDate', eDateParts);
+    } else if (getters.CUR_PERIOD === 'curWeek') {
         sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1))
         eDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1) + 6)
         sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
