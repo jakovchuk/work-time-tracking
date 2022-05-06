@@ -15,6 +15,8 @@ import { mapGetters, mapActions } from 'vuex';
 				'TPROJNAME_STATE',
 				'TWORKTYPE_STATE',
 				'TTIME_STATE',
+        'TSTARTTIME_STATE',
+        'TENDTIME_STATE',
         'TEMP_VALUES',
 				'BUTTYPE_STATE',
         'TIMERBUTTYPE_STATE',
@@ -50,7 +52,13 @@ import { mapGetters, mapActions } from 'vuex';
 			},
 			updateTime(e){
 				this.$store.commit('updateTime', e.target.value)
-			}
+			},
+      updateStartTime(e){
+        this.$store.commit('updateStartTime', e.target.value)
+      },
+      updateEndTime(e){
+        this.$store.commit('updateEndTime', e.target.value)
+      }
 		}
 	}
 </script>
@@ -63,12 +71,16 @@ import { mapGetters, mapActions } from 'vuex';
 				<div class="cell date">Date</div>
 				<div class="cell tablecol">Project Name</div>
 				<div class="cell tablecol">Description</div>
-				<div class="cell time">Elapsed Time</div>
+        <div class="cell time">Start Time</div>
+        <div class="cell time">End Time</div>
+				<div class="cell time">Elap. Time</div>
 			</div>
 			<div class="row">
 				<div class="cell date"><input type="date" :value="TDATE_STATE" @input="updateDate"></div>
 				<div class="cell tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></div>
 				<div class="cell tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList" size="26"></div>
+        <div class="cell time"><input type="time" :value="TSTARTTIME_STATE" @input="updateStartTime" :disabled="ADDBUTTON_DIS_STATE"></div>
+        <div class="cell time"><input type="time" :value="TENDTIME_STATE" @input="updateEndTime" :disabled="ADDBUTTON_DIS_STATE"></div>
 				<div class="cell time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></div>
 				<div class="cell date" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></div>
 				<div class="cell date" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></div>

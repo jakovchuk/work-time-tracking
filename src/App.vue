@@ -63,7 +63,9 @@ import {mapGetters, mapActions} from 'vuex'
 				<div class="cell date">Date</div>
 				<div class="cell tablecol">Project Name</div>
 				<div class="cell tablecol">Description</div>
-				<div class="cell time">Elapsed Time</div>
+        <div class="cell time">Start Time</div>
+        <div class="cell time">End Time</div>
+				<div class="cell time">Elap. Time</div>
 				<div class="cell tablerow"><button @click="CLEAR_TABLE">Clear Table</button></div>
 			</div>
 			<transition-group name="list">
@@ -72,6 +74,8 @@ import {mapGetters, mapActions} from 'vuex'
 				<div class="bordercell date">{{ work.date }}</div>
 				<div class="bordercell tablecol">{{ work.projName }}</div>
 				<div class="bordercell tablecol">{{ work.workType }}</div>
+        <div class="bordercell time">{{ work.starttime }}</div>
+        <div class="bordercell time">{{ work.endtime }}</div>
 				<div class="bordercell time">{{ work.time }}</div>
 				<div class="cell date"><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
 			</div>

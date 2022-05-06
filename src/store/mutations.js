@@ -1,9 +1,11 @@
-import { secToStr } from "@/func";
+import { secToStr, strToSec } from "@/func";
 
 const CLEAR_INPUT = state => {
     state.tdate = '';
     state.tprojName = '';
     state.tworkType = '';
+    state.tstarttime = '';
+    state.tendtime = '';
     state.ttime = '';
 }
 
@@ -11,6 +13,8 @@ const SET_INPUT = (state, index) => {
     state.tdate = state.works[index].date;
     state.tprojName = state.works[index].projName;
     state.tworkType = state.works[index].workType;
+    state.tstarttime = state.works[index].starttime;
+    state.tendtime = state.works[index].endtime;
     state.ttime = state.works[index].time;
 }
 
@@ -20,6 +24,8 @@ const WORKS_PUSH = state => {
         date: state.tdate,
         projName: state.tprojName,
         workType: state.tworkType,
+        starttime: state.tstarttime,
+        endtime: state.tendtime,
         time: state.ttime
     });
 }
@@ -29,6 +35,8 @@ const WORK_SAVE = (state, index) => {
     state.works[index].date = state.tdate;
     state.works[index].projName = state.tprojName;
     state.works[index].workType = state.tworkType;
+    state.works[index].starttime = state.tstarttime;
+    state.works[index].endtime = state.tendtime;
     state.works[index].time = state.ttime;
 }
 
@@ -53,6 +61,14 @@ const updateWorkType = (state, tworkType) => {
 
 const updateTime = (state, ttime) => {
     state.ttime = ttime
+}
+
+const updateStartTime = (state, time) => {
+    state.tstarttime = time
+}
+
+const updateEndTime = (state, time) => {
+    state.tendtime = time
 }
 
 const updateStartDate = (state, startDate) => {
@@ -105,7 +121,9 @@ const setCurNum = (state, value) => {
 }
 
 const incWorksChange = state => {
-    state.worksChange++
+    if (state.worksChange===0) //Change value
+        state.worksChange=1
+    else state.worksChange=0
 }
 
 const clearProjTime = state => {
@@ -130,7 +148,8 @@ const setCurrentDate = state => {
 
 const changeTime = state => {
     state.curTime ++;
-    state.ttime = secToStr(state.curTime)
+    state.ttime = secToStr(state.curTime);
+    state.tendtime = secToStr(strToSec(state.tstarttime)+strToSec(state.ttime));
 }
 
 const resetCurTime = state => {
@@ -142,7 +161,9 @@ const clearTable = state => {
 }
 
 const focusInputChange = state => {
-    state.focusInput++;
+    if (state.focusInput===0) //Change value
+        state.focusInput=1
+    else state.focusInput=0
 }
 
 export default {
@@ -156,6 +177,8 @@ export default {
     updateProjName,
     updateWorkType,
     updateTime,
+    updateStartTime,
+    updateEndTime,
     updateStartDate,
     updateEndDate,
     updatePeriod,

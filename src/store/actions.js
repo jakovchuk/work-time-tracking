@@ -147,34 +147,34 @@ const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {
     let eDate = new Date()
     let d = new Date()
     if (getters.CUR_PERIOD === 'Today') {
-        sDate.setDate(d.getDate())
-        eDate.setDate(d.getDate())
-        sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-        eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+        sDate.setDate(d.getDate());
+        eDate.setDate(d.getDate());
+        sDateParts = sDate.toLocaleDateString('uk-UA').split('.');
+        eDateParts = eDate.toLocaleDateString('uk-UA').split('.');
 
         commit('setStartDate', sDateParts);
         commit('setEndDate', eDateParts);
     } else if (getters.CUR_PERIOD === 'curWeek') {
-        sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1))
-        eDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1) + 6)
-        sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-        eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+        sDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1));
+        eDate.setDate(d.getDate() - d.getDay() + (d.getDay() === 0 ? -6 : 1) + 6);
+        sDateParts = sDate.toLocaleDateString('uk-UA').split('.');
+        eDateParts = eDate.toLocaleDateString('uk-UA').split('.');
 
         commit('setStartDate', sDateParts);
         commit('setEndDate', eDateParts);
     } else if (getters.CUR_PERIOD === 'curMonth') {
-        sDate.setDate(1)
-        eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)).getDate())
-        sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-        eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+        sDate.setDate(1);
+        eDate.setDate((new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)).getDate());
+        sDateParts = sDate.toLocaleDateString('uk-UA').split('.');
+        eDateParts = eDate.toLocaleDateString('uk-UA').split('.');
 
         commit('setStartDate', sDateParts);
         commit('setEndDate', eDateParts);
     } else if (getters.CUR_PERIOD === 'curYear') {
-        sDate = new Date(new Date().getFullYear(), 0, 1)
-        eDate = new Date(new Date().getFullYear(), 11, 31)
-        sDateParts = sDate.toLocaleDateString('uk-UA').split('.')
-        eDateParts = eDate.toLocaleDateString('uk-UA').split('.')
+        sDate = new Date(new Date().getFullYear(), 0, 1);
+        eDate = new Date(new Date().getFullYear(), 11, 31);
+        sDateParts = sDate.toLocaleDateString('uk-UA').split('.');
+        eDateParts = eDate.toLocaleDateString('uk-UA').split('.');
 
         commit('setStartDate', sDateParts);
         commit('setEndDate', eDateParts);
@@ -187,7 +187,9 @@ const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {
 }
 
 const ADD_RECORD = ({ getters, dispatch }) => {
-        if (!getters.TEMP_VALUES || getters.TTIME_STATE==='00:00') {
+        if (!getters.TEMP_VALUES ||
+            getters.TTIME_STATE=== '00:00' ||
+            getters.TENDTIME_STATE === '00:00') {
             alert('Fill ALL inputs, please!');
             return false
         }
@@ -219,7 +221,9 @@ const DELETE_RECORD = ({ dispatch }, row) => { //delete row
 }
 
 const SAVE_RECORD = ({ getters, dispatch }) => {
-    if (!getters.TEMP_VALUES || getters.TTIME_STATE==='00:00') {
+    if (!getters.TEMP_VALUES ||
+        getters.TTIME_STATE=== '00:00' ||
+        getters.TENDTIME_STATE === '00:00') {
         alert('Fill ALL inputs, please!');
         return false
     }
@@ -237,9 +241,16 @@ const CANCEL_EDIT = ({ dispatch }) => {
 }
 
 const START_TIMER = ({ commit }) => {
+
     commit('setCurrentDate');
     commit('changeTimerButType', 1);
     commit('setAddButtonDis', true);
+
+    let d = new Date();
+    d.setDate(d.getDate());
+    let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
+    commit('updateStartTime', TimeParts[0]+':'+TimeParts[1]);
+
     commit('changeTime');
     interval = setInterval(() => { commit('changeTime') }, 1000);
     commit('focusInputChange');
