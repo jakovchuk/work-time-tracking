@@ -60,15 +60,22 @@ const updateWorkType = (state, tworkType) => {
 }
 
 const updateTime = (state, ttime) => {
-    state.ttime = ttime
+    state.ttime = ttime;
+    state.tendtime = secToStr(strToSec(state.tstarttime)+strToSec(state.ttime))
 }
 
 const updateStartTime = (state, time) => {
     state.tstarttime = time
+    if (strToSec(state.tendtime)-strToSec(state.tstarttime) > 0)
+        state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
+    else { state.tendtime = state.tstarttime; state.ttime = '00:00' }
 }
 
 const updateEndTime = (state, time) => {
-    state.tendtime = time
+    state.tendtime = time;
+    if (strToSec(state.tendtime)-strToSec(state.tstarttime) > 0)
+        state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
+    else { state.tstarttime = state.tendtime; state.ttime = '00:00' }
 }
 
 const updateStartDate = (state, startDate) => {

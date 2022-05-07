@@ -240,7 +240,10 @@ const CANCEL_EDIT = ({ dispatch }) => {
     dispatch('BUTTYPE_CHANGE', 0);
 }
 
-const START_TIMER = ({ commit }) => {
+const START_TIMER = ({ commit, getters }) => {
+    if (getters.TTIME_STATE !== '')
+        if (!confirm("Do you want to RESET Elap. Time?"))
+            return false;
 
     commit('setCurrentDate');
     commit('changeTimerButType', 1);
