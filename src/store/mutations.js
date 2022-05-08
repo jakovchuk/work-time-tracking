@@ -30,6 +30,16 @@ const WORKS_PUSH = state => {
     });
 }
 
+const WORKS_SORT = state => {
+    state.works.sort((a, b) => {
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        if (strToSec(a.starttime) < strToSec(b.starttime)) return -1;
+        if (strToSec(a.starttime) > strToSec(b.starttime)) return 1;
+        return 0;
+    });
+}
+
 const WORK_SAVE = (state, index) => {
     state.works[index].id = index+1;
     state.works[index].date = state.tdate;
@@ -177,6 +187,7 @@ export default {
     CLEAR_INPUT,
     SET_INPUT,
     WORKS_PUSH,
+    WORKS_SORT,
     WORK_SAVE,
     WORK_DEL_ROW,
     initWorks,

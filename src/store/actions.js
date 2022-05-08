@@ -16,7 +16,7 @@ const CHANGE_INPUT = (context, index) => {
 
 const ADD_WORK = ({ commit, getters }) => {
     commit('WORKS_PUSH');
-    getters.WORKS_STATE.sort((a, b) => a.date > b.date ? 1 : -1);
+    commit('WORKS_SORT');
     saveToLS(getters.WORKS_STATE); //save Works to localStorage
 }
 
@@ -259,11 +259,12 @@ const START_TIMER = ({ commit, getters }) => {
     commit('focusInputChange');
 }
 
-const STOP_TIMER = ({ commit }) => {
+const STOP_TIMER = ({ commit, dispatch }) => {
     commit('changeTimerButType', 0);
     commit('setAddButtonDis', false);
     commit('resetCurTime');
     clearInterval(interval);
+    dispatch('ADD_RECORD');
 }
 
 const CLEAR_TABLE = ({ commit, getters }) => {
