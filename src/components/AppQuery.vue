@@ -1,39 +1,25 @@
-<script>
-import { mapGetters, mapActions } from 'vuex';
+<script setup>
+import { ref, computed } from "vue";
+import { useStore } from 'vuex';
 
-export default {
-  name: 'AppQuery',
-  computed: {
-    ...mapGetters([
-      'WORKS_STATE',
-      'STARTDATE_STATE',
-      'ENDDATE_STATE',
-      'CUR_PERIOD',
-      'PROJTIME_STATE'
-    ])
-  },
-  methods: {
-    ...mapActions ([
-      'INIT_WORKS',
-      'CLEAR_FILTERDATES',
-      'CLEAR_PERIOD',
-      'CHANGE_FILTERDATE',
-      'RESET_FILTER',
-      'UPDATE_QUERY',
-      'UPDATE_PERIOD',
-    ]),
-    updateStartDate(e) {
-      this.$store.commit('updateStartDate', e.target.value)
-    },
-    updateEndDate(e) {
-      this.$store.commit('updateEndDate', e.target.value)
-    }
-  }
-}
+const store = useStore();
+
+const WORKS_STATE = ref(computed(() => store.getters.WORKS_STATE));
+const STARTDATE_STATE = ref(computed(() => store.getters.STARTDATE_STATE));
+const ENDDATE_STATE = ref(computed(() => store.getters.ENDDATE_STATE));
+const CUR_PERIOD = ref(computed(() => store.getters.CUR_PERIOD));
+const PROJTIME_STATE = ref(computed(() => store.getters.PROJTIME_STATE));
+
+const CHANGE_FILTERDATE = () => store.dispatch('CHANGE_FILTERDATE');
+const RESET_FILTER = () => store.dispatch('RESET_FILTER');
+const UPDATE_PERIOD = (e) => store.dispatch('UPDATE_PERIOD', e);
+
+const updateStartDate = e => store.commit('updateStartDate', e.target.value);
+const updateEndDate = e => store.commit('updateEndDate', e.target.value);
 </script>
 
 <template>
-  <div class="AppQuery" v-if="this.WORKS_STATE.length>0 && this.WORKS_STATE[0].projName !== ''">
+  <div class="AppQuery" v-if="WORKS_STATE.length>0 && WORKS_STATE[0].projName !== ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:&nbsp;
       <select name="period" @change="UPDATE_PERIOD($event.target.value)" :value="CUR_PERIOD">

@@ -1,67 +1,42 @@
-<script>
-import { mapGetters, mapActions } from 'vuex';
+<script setup>
+import { useStore } from 'vuex';
+import { onBeforeMount, watch, ref, computed } from "vue";
 
-	export default {
-		name: 'AppInput',
-    created() {
-      this.$watch('FOCUSINPUT_STATE', () => {
-        this.$refs.projName.focus()
-      })
-    },
-    computed: {
-			...mapGetters([
-				'WORKS_STATE',
-        'PROJNAMELIST_STATE',
-        'DESCRIPTLIST_STATE',
-				'TDATE_STATE',
-				'TPROJNAME_STATE',
-				'TWORKTYPE_STATE',
-				'TTIME_STATE',
-        'TSTARTTIME_STATE',
-        'TENDTIME_STATE',
-        'TEMP_VALUES',
-				'BUTTYPE_STATE',
-        'TIMERBUTTYPE_STATE',
-        'ADDBUTTON_DIS_STATE',
-				'CURNUM_STATE',
-        'FOCUSINPUT_STATE'
-			])
-		},
-		methods: {
-			...mapActions([
-				'CLEAN_INPUT',
-				'ADD_WORK',
-				'SAVE_WORK',
-				'WORK_DEL',
-				'BUTTYPE_CHANGE',
-				'CURNUM_SET',
-				'INC_WORKSCHANGE',
-        'ADD_RECORD',
-        'SAVE_RECORD',
-        'CANCEL_EDIT',
-        'START_TIMER',
-        'STOP_TIMER'
-			]),
-			updateDate(e){
-				this.$store.commit('updateDate', e.target.value)
-			},
-			updateProjName(e){
-				this.$store.commit('updateProjName', e.target.value)
-			},
-			updateWorkType(e){
-				this.$store.commit('updateWorkType', e.target.value)
-			},
-			updateTime(e){
-				this.$store.commit('updateTime', e.target.value)
-			},
-      updateStartTime(e){
-        this.$store.commit('updateStartTime', e.target.value)
-      },
-      updateEndTime(e){
-        this.$store.commit('updateEndTime', e.target.value)
-      }
-		}
-	}
+const projName = ref(null)
+
+onBeforeMount(() => {
+  watch(FOCUSINPUT_STATE, () => {
+    projName.value.focus()
+  })
+});
+
+const store = useStore();
+
+const PROJNAMELIST_STATE = ref(computed(() => store.getters.PROJNAMELIST_STATE));
+const DESCRIPTLIST_STATE = ref(computed(() => store.getters.DESCRIPTLIST_STATE));
+const TDATE_STATE = ref(computed(() => store.getters.TDATE_STATE));
+const TPROJNAME_STATE = ref(computed(() => store.getters.TPROJNAME_STATE));
+const TWORKTYPE_STATE = ref(computed(() => store.getters.TWORKTYPE_STATE));
+const TTIME_STATE = ref(computed(() => store.getters.TTIME_STATE));
+const TSTARTTIME_STATE = ref(computed(() => store.getters.TSTARTTIME_STATE));
+const TENDTIME_STATE = ref(computed(() => store.getters.TENDTIME_STATE));
+const BUTTYPE_STATE = ref(computed(() => store.getters.BUTTYPE_STATE));
+const TIMERBUTTYPE_STATE = ref(computed(() => store.getters.TIMERBUTTYPE_STATE));
+const ADDBUTTON_DIS_STATE = ref(computed(() => store.getters.ADDBUTTON_DIS_STATE));
+const FOCUSINPUT_STATE = ref(computed(() => store.getters.FOCUSINPUT_STATE));
+
+const ADD_RECORD = () => store.dispatch('ADD_RECORD');
+const SAVE_RECORD = () => store.dispatch('SAVE_RECORD');
+const CANCEL_EDIT = () => store.dispatch('CANCEL_EDIT');
+const START_TIMER = () => store.dispatch('START_TIMER');
+const STOP_TIMER = () => store.dispatch('STOP_TIMER');
+
+const updateDate = e => store.commit('updateDate', e.target.value);
+const updateProjName = e => store.commit('updateProjName', e.target.value);
+const updateWorkType = e => store.commit('updateWorkType', e.target.value);
+const updateTime = e => store.commit('updateTime', e.target.value);
+const updateStartTime = e => store.commit('updateStartTime', e.target.value);
+const updateEndTime = e => store.commit('updateEndTime', e.target.value);
 </script>
 
 <template>
