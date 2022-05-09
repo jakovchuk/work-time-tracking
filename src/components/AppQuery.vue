@@ -70,13 +70,10 @@ export default {
 p {
   font: 1em "Fira Sans", sans-serif;
 }
-div .AppQuery{
+div.AppQuery{
 	background-color: #eec;
   margin-top: -0.5em;
   padding-top: 0.5em;
-}
-.query_table {
-	width: 300px;
 }
 .tablecol {
   width: 220px;

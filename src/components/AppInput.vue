@@ -40,8 +40,7 @@ import { mapGetters, mapActions } from 'vuex';
         'SAVE_RECORD',
         'CANCEL_EDIT',
         'START_TIMER',
-        'STOP_TIMER',
-        'FOCUS_OUT'
+        'STOP_TIMER'
 			]),
 			updateDate(e){
 				this.$store.commit('updateDate', e.target.value)
@@ -86,10 +85,10 @@ import { mapGetters, mapActions } from 'vuex';
 				<div class="cell time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></div>
 				<div class="cell date" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></div>
 				<div class="cell date" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></div>
-        <span v-if="BUTTYPE_STATE === 0">
+        <template v-if="BUTTYPE_STATE === 0">
           <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button></div>
           <div class="cell tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button></div>
-        </span>
+        </template>
 			</div>
 		</div>
 		<datalist id="projNameList">
@@ -104,7 +103,7 @@ import { mapGetters, mapActions } from 'vuex';
 </template>
 
 <style>
-div .AppInput{
+div.AppInput{
 	background-color: #eee;
 	margin-top: -0.5em;
 	padding-top: 0.5em;
@@ -129,9 +128,9 @@ div .AppInput{
 
 .table {
   display: table;
-  border: 0px solid black;
+  border: 0 solid black;
   margin: 5px;
-  padding: 0px;
+  padding: 0;
   width:100%
 }
 .cell {
@@ -144,5 +143,30 @@ div .AppInput{
 }
 .row {
   display: table-row;
+}
+button {
+  background-color: white;
+  color: black;
+  border: 2px solid navy;
+  border-radius: 2px;
+  padding: 1px 7px;
+}
+button:disabled {
+  background-color: #d5d5d5;
+  color: black;
+  border: 2px solid navy;
+  border-radius: 2px;
+}
+button#starttimer {
+  background-color: #53b763;
+  color: #ffffff;
+  border: 2px solid navy;
+  border-radius: 2px;
+}
+button#stoptimer {
+  background-color: #b04a4a;
+  color: #ffffff;
+  border: 2px solid navy;
+  border-radius: 2px;
 }
 </style>

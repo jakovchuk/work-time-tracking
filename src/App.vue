@@ -1,56 +1,35 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import AppInput from './components/AppInput.vue'
 import AppQuery from './components/AppQuery.vue'
-</script>
+import { useStore } from 'vuex'
+import { onBeforeMount, onMounted, computed, ref, watch } from 'vue'
 
-<script>
-import {mapGetters, mapActions} from 'vuex'
+onBeforeMount(() => {
+  watch(WORKSCHANGE_STATE, () => {
+    UPDATE_QUERY()
+  })
+});
 
-	export default {
-    created() {
-      this.$watch('WORKSCHANGE_STATE', () => {
-        this.UPDATE_QUERY()
-      })
-    },
-    mounted(){
-      if(localStorage.works) {
-        this.INIT_WORKS();
-        this.INIT_INPUTOPTIONS();
-        this.UPDATE_QUERY()
-      }
-    },
-    computed: {
-			...mapGetters([
-          'WORKS_STATE',
-          'TDATE_STATE',
-          'TPROJNAME_STATE',
-          'TWORKTYPE_STATE',
-          'TTIME_STATE',
-          'BUTTYPE_STATE',
-          'CURNUM_STATE',
-          'WORKSCHANGE_STATE',
-          'ADDBUTTON_DIS_STATE'
-			])
-		},
-		methods: {
-			...mapActions([
-          'WORK_DEL',
-          'CHANGE_INPUT',
-          'BUTTYPE_CHANGE',
-          'CURNUM_SET',
-          'CLEAN_INPUT',
-          'INC_WORKSCHANGE',
-          'UPDATE_QUERY',
-          'INIT_WORKS',
-          'INIT_INPUTOPTIONS',
-          'EDIT_RECORD',
-          'DELETE_RECORD',
-          'CLEAR_TABLE'
-			])
-		}
-	}
+onMounted(() => {
+  if(localStorage.works) {
+    INIT_WORKS();
+    INIT_INPUTOPTIONS();
+    UPDATE_QUERY()
+  }
+})
+
+const store = useStore();
+
+const WORKS_STATE = ref(computed(() => store.getters.WORKS_STATE));
+const WORKSCHANGE_STATE = ref(computed(() => store.getters.WORKSCHANGE_STATE));
+const ADDBUTTON_DIS_STATE = ref(computed(() => store.getters.ADDBUTTON_DIS_STATE));
+
+const UPDATE_QUERY = () => store.dispatch('UPDATE_QUERY');
+const INIT_WORKS = () => store.dispatch('INIT_WORKS');
+const INIT_INPUTOPTIONS = () => store.dispatch('INIT_INPUTOPTIONS');
+const EDIT_RECORD = (index) => store.dispatch('EDIT_RECORD', index);
+const DELETE_RECORD = (index) => store.dispatch('DELETE_RECORD', index);
+const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 </script>
 
 <template>
@@ -116,9 +95,9 @@ h3{
 }
 .table {
   display: table;
-  border: 0px solid black;
+  border: 0 solid black;
   margin: 5px;
-  padding: 0px;
+  padding: 0;
   width:100%
 }
 .cell {
@@ -130,7 +109,7 @@ h3{
 .cell {
   display:inline-block;
   padding:3px;
-  margin:0px 1px;
+  margin:0 1px;
 }
 .bordercell {
   display: table-cell;
@@ -141,7 +120,7 @@ h3{
 .bordercell {
   display:inline-block;
   padding:3px;
-  margin:0px 1px;
+  margin:0 1px;
 }
 .row {
   display: table-row;
@@ -156,18 +135,6 @@ button {
 button:disabled {
   background-color: #d5d5d5;
   color: black;
-  border: 2px solid navy;
-  border-radius: 2px;
-}
-button#starttimer {
-  background-color: #53b763;
-  color: #ffffff;
-  border: 2px solid navy;
-  border-radius: 2px;
-}
-button#stoptimer {
-  background-color: #b04a4a;
-  color: #ffffff;
   border: 2px solid navy;
   border-radius: 2px;
 }

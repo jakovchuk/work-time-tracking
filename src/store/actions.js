@@ -10,7 +10,7 @@ const INIT_INPUTOPTIONS = context => {
     context.commit('initInputOptions')
 }
 
-const CLEAN_INPUT = (context) => {
+const CLEAN_INPUT = context => {
     context.commit('CLEAR_INPUT')
 }
 
@@ -70,7 +70,6 @@ const RESET_FILTER = ({ dispatch }) => {
 }
 
 const UPDATE_QUERY = ({ commit, getters }) => {
-    // context.commit('updateQuery')
     let projNm = [];
     for (let j=0; j < getters.WORKS_STATE.length; j++) {
         projNm[j] = getters.WORKS_STATE[j].projName        //create array of Project names
