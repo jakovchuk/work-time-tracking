@@ -6,6 +6,10 @@ const INIT_WORKS = context => {
     context.commit('initWorks')
 }
 
+const INIT_INPUTOPTIONS = context => {
+    context.commit('initInputOptions')
+}
+
 const CLEAN_INPUT = (context) => {
     context.commit('CLEAR_INPUT')
 }
@@ -17,17 +21,21 @@ const CHANGE_INPUT = (context, index) => {
 const ADD_WORK = ({ commit, getters }) => {
     commit('WORKS_PUSH');
     commit('WORKS_SORT');
-    saveToLS(getters.WORKS_STATE); //save Works to localStorage
+    commit('PROJNAMELIST_PUSH');
+    commit('DESCRIPTLIST_PUSH');
+    saveToLS('projNames', getters.PROJNAMELIST_STATE); //save projNamesList to localStorage
+    saveToLS('descript', getters.DESCRIPTLIST_STATE); //save descriptList to localStorage
+    saveToLS('works', getters.WORKS_STATE); //save Works to localStorage
 }
 
 const SAVE_WORK = ({ commit, getters }, index) => {
     commit('WORK_SAVE', index);
-    saveToLS(getters.WORKS_STATE); //save Works to localStorage
+    saveToLS('works', getters.WORKS_STATE); //save Works to localStorage
 }
 
 const WORK_DEL = ({ commit, getters }, index) => {
     commit('WORK_DEL_ROW', index);
-    saveToLS(getters.WORKS_STATE); //save Works to localStorage
+    saveToLS('works', getters.WORKS_STATE); //save Works to localStorage
 }
 
 const BUTTYPE_CHANGE = (context, value) => {
@@ -210,7 +218,7 @@ const EDIT_RECORD = ({ dispatch }, row) => { 	//edit row
 }
 
 const DELETE_RECORD = ({ dispatch }, row) => { //delete row
-    if (confirm('Do you want to DELETE row?')) {
+    if (confirm('Do you want to DELETE record?')) {
         dispatch('WORK_DEL', row);
 
         dispatch('CLEAN_INPUT');
@@ -242,7 +250,7 @@ const CANCEL_EDIT = ({ dispatch }) => {
 
 const START_TIMER = ({ commit, getters }) => {
     if (getters.TTIME_STATE !== '')
-        if (!confirm("Do you want to RESET Elap. Time?"))
+        if (!confirm("Do you want to RESET Time fields?"))
             return false;
 
     commit('setCurrentDate');
@@ -262,7 +270,6 @@ const START_TIMER = ({ commit, getters }) => {
 const STOP_TIMER = ({ commit, dispatch }) => {
     commit('changeTimerButType', 0);
     commit('setAddButtonDis', false);
-    commit('resetCurTime');
     clearInterval(interval);
     dispatch('ADD_RECORD');
 }
@@ -270,12 +277,13 @@ const STOP_TIMER = ({ commit, dispatch }) => {
 const CLEAR_TABLE = ({ commit, getters }) => {
     if (confirm('Do you want to CLEAR TABLE?')) {
         commit('clearTable');
-        saveToLS(getters.WORKS_STATE); //save Works to localStorage
+        saveToLS('works', getters.WORKS_STATE); //save Works to localStorage
     }
 }
 
 export default {
     INIT_WORKS,
+    INIT_INPUTOPTIONS,
     CLEAN_INPUT,
     CHANGE_INPUT,
     ADD_WORK,

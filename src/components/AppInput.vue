@@ -11,6 +11,8 @@ import { mapGetters, mapActions } from 'vuex';
     computed: {
 			...mapGetters([
 				'WORKS_STATE',
+        'PROJNAMELIST_STATE',
+        'DESCRIPTLIST_STATE',
 				'TDATE_STATE',
 				'TPROJNAME_STATE',
 				'TWORKTYPE_STATE',
@@ -78,7 +80,7 @@ import { mapGetters, mapActions } from 'vuex';
 			<div class="row">
 				<div class="cell date"><input type="date" :value="TDATE_STATE" @input="updateDate"></div>
 				<div class="cell tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></div>
-				<div class="cell tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="workTypeList" size="26"></div>
+				<div class="cell tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="DescriptList" size="26"></div>
         <div class="cell time"><input type="time" :value="TSTARTTIME_STATE" @input="updateStartTime" :disabled="ADDBUTTON_DIS_STATE"></div>
         <div class="cell time"><input type="time" :value="TENDTIME_STATE" @input="updateEndTime" :disabled="ADDBUTTON_DIS_STATE"></div>
 				<div class="cell time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></div>
@@ -91,14 +93,10 @@ import { mapGetters, mapActions } from 'vuex';
 			</div>
 		</div>
 		<datalist id="projNameList">
-			<option>Project 1</option>
-			<option>Project 2</option>
-			<option>Project 3</option>
+			<option v-for="projName in PROJNAMELIST_STATE" :key="projName.id">{{ projName }}</option>
 		</datalist>
-		<datalist id="workTypeList">
-			<option>Coding...</option>
-			<option>Testing...</option>
-			<option>Finding errors and fixing...</option>
+		<datalist id="DescriptList">
+      <option v-for="descript in DESCRIPTLIST_STATE" :key="descript.id">{{ descript }}</option>
 		</datalist>
 		<br>
 		<hr>

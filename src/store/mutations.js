@@ -30,6 +30,16 @@ const WORKS_PUSH = state => {
     });
 }
 
+const PROJNAMELIST_PUSH = state => {
+    state.projNameList.push(state.tprojName);
+    state.projNameList = Array.from(new Set(state.projNameList)); //remove duplicates
+}
+
+const DESCRIPTLIST_PUSH = state => {
+    state.descriptList.push(state.tworkType);
+    state.descriptList = Array.from(new Set(state.descriptList)); //remove duplicates
+}
+
 const WORKS_SORT = state => {
     state.works.sort((a, b) => {
         if (a.date < b.date) return -1;
@@ -56,6 +66,12 @@ const WORK_DEL_ROW = (state, index) => {
 
 const initWorks = state => {
     state.works = JSON.parse(localStorage.getItem('works'));
+}
+const initInputOptions = state => {
+    if (localStorage.getItem('projNames') === null) state.projNameList = []
+        else state.projNameList = JSON.parse(localStorage.getItem('projNames'));
+    if (localStorage.getItem('descript') === null) state.descriptList = []
+        else state.descriptList = JSON.parse(localStorage.getItem('descript'));
 }
 const updateDate = (state, tdate) => {
     state.tdate = tdate
@@ -164,13 +180,11 @@ const setCurrentDate = state => {
 }
 
 const changeTime = state => {
-    state.curTime ++;
-    state.ttime = secToStr(state.curTime);
-    state.tendtime = secToStr(strToSec(state.tstarttime)+strToSec(state.ttime));
-}
-
-const resetCurTime = state => {
-    state.curTime = 0;
+    let d = new Date();
+    d.setDate(d.getDate());
+    let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
+    state.tendtime = TimeParts[0] + ':' + TimeParts[1];
+    state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime));
 }
 
 const clearTable = state => {
@@ -187,10 +201,13 @@ export default {
     CLEAR_INPUT,
     SET_INPUT,
     WORKS_PUSH,
+    PROJNAMELIST_PUSH,
+    DESCRIPTLIST_PUSH,
     WORKS_SORT,
     WORK_SAVE,
     WORK_DEL_ROW,
     initWorks,
+    initInputOptions,
     updateDate,
     updateProjName,
     updateWorkType,
@@ -214,7 +231,6 @@ export default {
     setProjNames,
     setCurrentDate,
     changeTime,
-    resetCurTime,
     clearTable,
     focusInputChange
 }

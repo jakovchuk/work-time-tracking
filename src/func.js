@@ -13,7 +13,7 @@ export function secToStr(sec) {
     return hours+':'+minutes;
 }
 
-export function saveToLS(array) {
-    localStorage.clear();
-    localStorage.setItem('works', JSON.stringify(array));
+export function saveToLS(name, array) {
+    localStorage.removeItem(name);
+    localStorage.setItem(name, JSON.stringify(array));
 }

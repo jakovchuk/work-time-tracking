@@ -1,4 +1,6 @@
 const WORKS_STATE = state => state.works;
+const PROJNAMELIST_STATE = state => state.projNameList;
+const DESCRIPTLIST_STATE = state => state.descriptList;
 const PROJTIME_STATE = state => state.projTime;
 const TDATE_STATE = state => state.tdate;
 const TPROJNAME_STATE = state => state.tprojName;
@@ -28,6 +30,8 @@ const FOCUSINPUT_STATE = state => state.focusInput;
 
 export default {
   WORKS_STATE,
+  PROJNAMELIST_STATE,
+  DESCRIPTLIST_STATE,
   PROJTIME_STATE,
   TDATE_STATE,
   TPROJNAME_STATE,

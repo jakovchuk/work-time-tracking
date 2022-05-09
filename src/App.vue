@@ -17,6 +17,7 @@ import {mapGetters, mapActions} from 'vuex'
     mounted(){
       if(localStorage.works) {
         this.INIT_WORKS();
+        this.INIT_INPUTOPTIONS();
         this.UPDATE_QUERY()
       }
     },
@@ -43,6 +44,7 @@ import {mapGetters, mapActions} from 'vuex'
           'INC_WORKSCHANGE',
           'UPDATE_QUERY',
           'INIT_WORKS',
+          'INIT_INPUTOPTIONS',
           'EDIT_RECORD',
           'DELETE_RECORD',
           'CLEAR_TABLE'
