@@ -34,7 +34,7 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 
 <template>
 	<div id="app">
-		<h1 style="color:navy;"><b><u>Work Time Tracking</u></b></h1>
+		<h1>Work Time Tracking</h1>
 		<AppInput></AppInput>
 		<transition name="fade">
 		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date !== ''">
@@ -73,6 +73,11 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 
 <style>
 body { zoom: 115%; }
+h1{
+  color: navy;
+  font: bold 1.8em "Tahoma";
+  text-decoration: underline;
+}
 h3{
     font: bold 1.2em "Tahoma", sans-serif;
 		color: maroon;
