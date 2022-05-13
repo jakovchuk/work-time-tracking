@@ -21,6 +21,7 @@ export default {
     tendtime: '',
     startDate: '',
     endDate: '',
+    timeSum: '',
     period: 'Choose period',
     butType: 0,
     timerButType: 0,

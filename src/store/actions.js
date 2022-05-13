@@ -143,6 +143,7 @@ const UPDATE_QUERY = ({ commit, getters }) => {
             commit('pushProjTime', j)
         }
     }
+    commit('countTimeSum')
 }
 
 const UPDATE_PERIOD = ({ commit, getters, dispatch }, value) => {

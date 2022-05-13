@@ -128,6 +128,14 @@ const setEndDate = (state, eDateParts) => {
         else state.endDate = ''
 }
 
+const countTimeSum = state => {
+    var TimeSum = 0;
+    state.projTime.forEach((obj) => {
+        TimeSum += strToSec(obj.projT)
+    })
+    state.timeSum = secToStr(TimeSum)
+}
+
 const clearFilterDates = state => {
     state.startDate = '';
     state.endDate = '';
@@ -219,6 +227,7 @@ export default {
     updatePeriod,
     setStartDate,
     setEndDate,
+    countTimeSum,
     clearFilterDates,
     clearPeriod,
     changeButType,

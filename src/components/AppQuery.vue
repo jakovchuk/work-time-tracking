@@ -9,6 +9,7 @@ const STARTDATE_STATE = ref(computed(() => store.getters.STARTDATE_STATE));
 const ENDDATE_STATE = ref(computed(() => store.getters.ENDDATE_STATE));
 const CUR_PERIOD = ref(computed(() => store.getters.CUR_PERIOD));
 const PROJTIME_STATE = ref(computed(() => store.getters.PROJTIME_STATE));
+const TIMESUM_STATE = ref(computed(() => store.getters.TIMESUM_STATE));
 
 const CHANGE_FILTERDATE = () => store.dispatch('CHANGE_FILTERDATE');
 const RESET_FILTER = () => store.dispatch('RESET_FILTER');
@@ -46,6 +47,12 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
 			</div>
       </template>
       </transition-group>
+    </div>
+    <div class="table" style="width: 400px;">
+      <div class="row" v-if="PROJTIME_STATE.length > 0 ">
+        <div class="border cell tablecol"><b>Overall Time:</b></div>
+        <div class="border cell time"><b>{{ TIMESUM_STATE }}</b></div>
+      </div>
     </div>
     <br>
     <hr>

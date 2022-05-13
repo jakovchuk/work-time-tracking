@@ -18,6 +18,7 @@ const TEMP_VALUES = state => {
 }
 const STARTDATE_STATE = state => state.startDate;
 const ENDDATE_STATE = state => state.endDate;
+const TIMESUM_STATE = state => state.timeSum;
 const CUR_PERIOD = state => state.period;
 const BUTTYPE_STATE = state => state.butType;
 const TIMERBUTTYPE_STATE = state => state.timerButType;
@@ -42,6 +43,7 @@ export default {
   TEMP_VALUES,
   STARTDATE_STATE,
   ENDDATE_STATE,
+  TIMESUM_STATE,
   CUR_PERIOD,
   BUTTYPE_STATE,
   TIMERBUTTYPE_STATE,
