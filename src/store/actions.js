@@ -250,17 +250,19 @@ const CANCEL_EDIT = ({ dispatch }) => {
 
 const START_TIMER = ({ commit, getters }) => {
     if (getters.TTIME_STATE !== '')
-        if (!confirm("Do you want to RESET Time fields?"))
+        if (!confirm("Do you want to RESET 'End Time' & 'Elap.Time' fields?"))
             return false;
 
     commit('setCurrentDate');
     commit('changeTimerButType', 1);
     commit('setAddButtonDis', true);
 
-    let d = new Date();
-    d.setDate(d.getDate());
-    let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
-    commit('updateStartTime', TimeParts[0]+':'+TimeParts[1]);
+    if (!getters.TSTARTTIME_STATE) {
+        let d = new Date();
+        d.setDate(d.getDate());
+        let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
+        commit('updateStartTime', TimeParts[0]+':'+TimeParts[1]);
+    }
 
     commit('changeTime');
     interval = setInterval(() => { commit('changeTime') }, 1000);

@@ -181,7 +181,6 @@ const setProjNames = (state, array) => {
 
 const setCurrentDate = state => {
     let d = new Date()
-
     d.setDate(d.getDate());
     let DateParts = d.toLocaleDateString('uk-UA').split('.')
     state.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0];
