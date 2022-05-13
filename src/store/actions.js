@@ -270,7 +270,8 @@ const STOP_TIMER = ({ commit, dispatch }) => {
     commit('changeTimerButType', 0);
     commit('setAddButtonDis', false);
     clearInterval(interval);
-    dispatch('ADD_RECORD');
+    if (confirm('Do you want to save this RECORD?'))
+        dispatch('ADD_RECORD');
 }
 
 const CLEAR_TABLE = ({ commit, getters }) => {
