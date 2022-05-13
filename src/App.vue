@@ -52,12 +52,12 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
 			<div class="row" v-if="WORKS_STATE.date !== '' ">
-				<div class="bordercell date">{{ work.date }}</div>
-				<div class="bordercell tablecol">{{ work.projName }}</div>
-				<div class="bordercell tablecol">{{ work.workType }}</div>
-        <div class="bordercell time">{{ work.starttime }}</div>
-        <div class="bordercell time">{{ work.endtime }}</div>
-				<div class="bordercell time">{{ work.time }}</div>
+				<div class="border cell date">{{ work.date }}</div>
+				<div class="border cell tablecol">{{ work.projName }}</div>
+				<div class="border cell tablecol">{{ work.workType }}</div>
+        <div class="border cell time">{{ work.starttime }}</div>
+        <div class="border cell time">{{ work.endtime }}</div>
+				<div class="border cell time">{{ work.time }}</div>
 				<div class="cell date"><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
 			</div>
       </template>
@@ -103,29 +103,20 @@ h3{
   border: 0 solid black;
   margin: 5px;
   padding: 0;
-  width:100%
+  width:1000px;
+  border-spacing:2px;
 }
 .cell {
   display: table-cell;
+  padding:3px;
+  margin:0 1px;
   border: 1px solid transparent;
   border-collapse: collapse;
   border-radius: 2px;
 }
-.cell {
-  display:inline-block;
-  padding:3px;
-  margin:0 1px;
-}
-.bordercell {
-  display: table-cell;
+.border {
   border: 1px solid;
-  border-collapse: collapse;
-  border-radius: 2px;
-}
-.bordercell {
-  display:inline-block;
-  padding:3px;
-  margin:0 1px;
+  background-color: white;
 }
 .row {
   display: table-row;
@@ -138,9 +129,9 @@ button {
   padding: 1px 7px;
 }
 button:disabled {
-  background-color: #d5d5d5;
-  color: black;
-  border: 2px solid navy;
+  background-color: #ececec;
+  color: #595959;
+  border: 2px solid #8f8f8f;
   border-radius: 2px;
 }
 .fade-enter-active {

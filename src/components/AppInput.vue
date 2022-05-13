@@ -42,7 +42,7 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
 <template>
 	<div class="AppInput">
 		<h3>Input Form:</h3>
-		<div class="table">
+		<div class="table" style="width: 1230px;">
 			<div class="row header">
 				<div class="cell date">Date</div>
 				<div class="cell tablecol">Project Name</div>
@@ -64,6 +64,7 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
           <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button></div>
           <div class="cell tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button></div>
         </template>
+        <div class="cell tablecol" v-else></div>
 			</div>
 		</div>
 		<datalist id="projNameList">
@@ -101,16 +102,6 @@ div.AppInput{
   width: 80px;
 }
 
-.table {
-  display: table;
-  border: 0 solid black;
-  margin: 5px;
-  padding: 0;
-  width:100%
-}
-.cell {
-  display: table-cell;
-}
 .cell {
   display:inline-block;
   padding:3px;

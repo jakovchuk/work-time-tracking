@@ -33,7 +33,7 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
       <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="CHANGE_FILTERDATE"> to&nbsp;
       <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="CHANGE_FILTERDATE">&nbsp;
     <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
-    <div class="table">
+    <div class="table" style="width: 400px;">
 			<div class="row header" v-if="PROJTIME_STATE.length > 0 ">
 				<div class="cell tablecol">Project Name</div>
 				<div class="cell time">Time</div>
@@ -41,8 +41,8 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
       <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
       <div class="row" v-if="pTime.projN !== '' " :key="pTime.id">
-				<div class="bordercell tablecol">{{pTime.projN}}</div>
-				<div class="bordercell time">{{pTime.projT}}</div>
+				<div class="border cell tablecol">{{pTime.projN}}</div>
+				<div class="border cell time">{{pTime.projT}}</div>
 			</div>
       </template>
       </transition-group>
@@ -63,13 +63,5 @@ div.AppQuery{
 }
 .tablecol {
   width: 220px;
-}
-.time {
-  width: 80px;
-}
-.bordercell {
-	border: 1px solid;
-	border-collapse: collapse;
-  background-color: white;
 }
 </style>
