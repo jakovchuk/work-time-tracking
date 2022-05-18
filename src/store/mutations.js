@@ -79,10 +79,12 @@ const updateDate = (state, tdate) => {
 
 const updateProjName = (state, tprojName) => {
     state.tprojName = tprojName
+    if (state.tdate === '') setCurrentDate(state)
 }
 
 const updateWorkType = (state, tworkType) => {
     state.tworkType = tworkType
+    if (state.tdate === '') setCurrentDate(state)
 }
 
 const updateTime = (state, ttime) => {
