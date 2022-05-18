@@ -94,16 +94,16 @@ const updateTime = (state, ttime) => {
 
 const updateStartTime = (state, time) => {
     state.tstarttime = time
-    if (strToSec(state.tendtime)-strToSec(state.tstarttime) > 0)
+    if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
         state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
-    else { state.tendtime = state.tstarttime; state.ttime = '00:00' }
+    else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
 }
 
 const updateEndTime = (state, time) => {
     state.tendtime = time;
-    if (strToSec(state.tendtime)-strToSec(state.tstarttime) > 0)
+    if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
         state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
-    else { state.tstarttime = state.tendtime; state.ttime = '00:00' }
+    else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
 }
 
 const updateStartDate = (state, startDate) => {
@@ -193,7 +193,9 @@ const changeTime = state => {
     d.setDate(d.getDate());
     let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
     state.tendtime = TimeParts[0] + ':' + TimeParts[1];
-    state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime));
+    if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
+        state.ttime = secToStr(strToSec(state.tendtime) - strToSec(state.tstarttime))
+    else state.ttime = secToStr(86400 + strToSec(state.tendtime) - strToSec(state.tstarttime)) //add 24-hours
 }
 
 const clearTable = state => {
