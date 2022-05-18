@@ -1,4 +1,4 @@
-import {saveToLS, strToSec } from "@/func";
+import {quarterTime, saveToLS, strToSec} from "@/func";
 
 var interval = null;
 
@@ -19,6 +19,10 @@ const CHANGE_INPUT = (context, index) => {
 }
 
 const ADD_WORK = ({ commit, getters }) => {
+    //Round time to 15 minutes
+    commit('updateStartTime', quarterTime(getters.TSTARTTIME_STATE));
+    commit('updateEndTime', quarterTime(getters.TENDTIME_STATE));
+
     commit('WORKS_PUSH');
     commit('WORKS_SORT');
     commit('PROJNAMELIST_PUSH');
@@ -29,6 +33,10 @@ const ADD_WORK = ({ commit, getters }) => {
 }
 
 const SAVE_WORK = ({ commit, getters }, index) => {
+    //Round time to 15 minutes
+    commit('updateStartTime', quarterTime(getters.TSTARTTIME_STATE));
+    commit('updateEndTime', quarterTime(getters.TENDTIME_STATE));
+
     commit('WORK_SAVE', index);
     saveToLS('works', getters.WORKS_STATE); //save Works to localStorage
 }
