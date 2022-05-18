@@ -30,6 +30,7 @@ const SAVE_RECORD = () => store.dispatch('SAVE_RECORD');
 const CANCEL_EDIT = () => store.dispatch('CANCEL_EDIT');
 const START_TIMER = () => store.dispatch('START_TIMER');
 const STOP_TIMER = () => store.dispatch('STOP_TIMER');
+const PRESS_ENTER = () => store.dispatch('PRESS_ENTER');
 
 const updateDate = e => store.commit('updateDate', e.target.value);
 const updateProjName = e => store.commit('updateProjName', e.target.value);
@@ -52,17 +53,66 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
 				<div class="cell time">Elap. Time</div>
 			</div>
 			<div class="row">
-				<div class="cell date"><input type="date" :value="TDATE_STATE" @input="updateDate"></div>
-				<div class="cell tablecol"><input type="text" :value="TPROJNAME_STATE" @input="updateProjName" list="projNameList" ref="projName" size="26"></div>
-				<div class="cell tablecol"><input type="text" :value="TWORKTYPE_STATE" @input="updateWorkType" list="DescriptList" size="26"></div>
-        <div class="cell time"><input type="time" :value="TSTARTTIME_STATE" @input="updateStartTime" :disabled="ADDBUTTON_DIS_STATE"></div>
-        <div class="cell time"><input type="time" :value="TENDTIME_STATE" @input="updateEndTime" :disabled="ADDBUTTON_DIS_STATE"></div>
-				<div class="cell time"><input type="time" :value="TTIME_STATE" @input="updateTime" :disabled="ADDBUTTON_DIS_STATE"></div>
-				<div class="cell date" v-if="BUTTYPE_STATE === 0"><button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button></div>
-				<div class="cell date" v-else><button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button></div>
+				<div class="cell date">
+          <input type="date"
+                 :value="TDATE_STATE"
+                 @input="updateDate"
+          >
+        </div>
+				<div class="cell tablecol">
+          <input type="text"
+                 :value="TPROJNAME_STATE"
+                 @input="updateProjName"
+                 @keyup.enter="PRESS_ENTER"
+                 list="projNameList"
+                 ref="projName"
+                 size="26"
+          >
+        </div>
+				<div class="cell tablecol">
+          <input type="text"
+                 :value="TWORKTYPE_STATE"
+                 @input="updateWorkType"
+                 @keyup.enter="PRESS_ENTER"
+                 list="DescriptList"
+                 size="26"
+          >
+        </div>
+        <div class="cell time">
+          <input
+              type="time"
+              :value="TSTARTTIME_STATE"
+              @input="updateStartTime"
+              :disabled="ADDBUTTON_DIS_STATE"
+          >
+        </div>
+        <div class="cell time">
+          <input type="time"
+                 :value="TENDTIME_STATE"
+                 @input="updateEndTime"
+                 :disabled="ADDBUTTON_DIS_STATE"
+          >
+        </div>
+				<div class="cell time">
+          <input type="time"
+                 :value="TTIME_STATE"
+                 @input="updateTime"
+                 :disabled="ADDBUTTON_DIS_STATE"
+          >
+        </div>
+				<div class="cell date" v-if="BUTTYPE_STATE === 0">
+          <button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button>
+        </div>
+				<div class="cell date" v-else>
+          <button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button>
+        </div>
         <template v-if="BUTTYPE_STATE === 0">
-          <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0"><button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button></div>
-          <div class="cell tablecol" v-else><button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button></div>
+          <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0">
+            <button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button>
+          </div>
+          <div class="cell tablecol" v-else>
+            <button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button>
+          </div>
         </template>
         <div class="cell tablecol" v-else></div>
 			</div>

@@ -284,6 +284,12 @@ const CLEAR_TABLE = ({ commit, getters }) => {
     }
 }
 
+const PRESS_ENTER = ({ getters, dispatch }) => {
+    if (getters.BUTTYPE_STATE === 0) {
+        if (!getters.ADDBUTTON_DIS_STATE) dispatch('ADD_RECORD')
+    } else dispatch('SAVE_RECORD')
+}
+
 export default {
     INIT_WORKS,
     INIT_INPUTOPTIONS,
@@ -308,5 +314,6 @@ export default {
     CANCEL_EDIT,
     START_TIMER,
     STOP_TIMER,
-    CLEAR_TABLE
+    CLEAR_TABLE,
+    PRESS_ENTER
 }
