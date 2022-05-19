@@ -265,12 +265,11 @@ const START_TIMER = ({ commit, getters }) => {
     commit('changeTimerButType', 1);
     commit('setAddButtonDis', true);
 
-    if (!getters.TSTARTTIME_STATE) {
-        let d = new Date();
-        d.setDate(d.getDate());
-        let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
+    let d = new Date();
+    d.setDate(d.getDate());
+    let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
+    if (!getters.TSTARTTIME_STATE || strToSec(getters.TSTARTTIME_STATE)>strToSec(d.toLocaleTimeString('uk-UA')))
         commit('updateStartTime', TimeParts[0]+':'+TimeParts[1]);
-    }
 
     commit('changeTime');
     interval = setInterval(() => { commit('changeTime') }, 1000);
