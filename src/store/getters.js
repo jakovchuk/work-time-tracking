@@ -8,13 +8,15 @@ const TWORKTYPE_STATE = state => state.tworkType;
 const TSTARTTIME_STATE = state => state.tstarttime;
 const TENDTIME_STATE = state => state.tendtime;
 const TTIME_STATE = state => state.ttime;
+const INPUT_STATE = state => state.inputState;
+const INIT_INPUT = state => state.initInput;
 const TEMP_VALUES = state => {
   return !(state.tdate === '' ||
       state.tprojName === '' ||
       state.tworkType === '' ||
       state.starttime === '' ||
       state.endtime === '' ||
-      state.ttime === '');
+      state.ttime === '')
 }
 const STARTDATE_STATE = state => state.startDate;
 const ENDDATE_STATE = state => state.endDate;
@@ -40,6 +42,8 @@ export default {
   TTIME_STATE,
   TSTARTTIME_STATE,
   TENDTIME_STATE,
+  INPUT_STATE,
+  INIT_INPUT,
   TEMP_VALUES,
   STARTDATE_STATE,
   ENDDATE_STATE,

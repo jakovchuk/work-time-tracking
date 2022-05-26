@@ -14,6 +14,7 @@ onMounted(() => {
   if(localStorage.works) {
     INIT_WORKS();
     INIT_INPUTOPTIONS();
+    INIT_INPUTSTATE();
     UPDATE_QUERY()
   }
 })
@@ -27,6 +28,7 @@ const ADDBUTTON_DIS_STATE = ref(computed(() => store.getters.ADDBUTTON_DIS_STATE
 const UPDATE_QUERY = () => store.dispatch('UPDATE_QUERY');
 const INIT_WORKS = () => store.dispatch('INIT_WORKS');
 const INIT_INPUTOPTIONS = () => store.dispatch('INIT_INPUTOPTIONS');
+const INIT_INPUTSTATE = () => store.dispatch('INIT_INPUTSTATE');
 const EDIT_RECORD = (index) => store.dispatch('EDIT_RECORD', index);
 const DELETE_RECORD = (index) => store.dispatch('DELETE_RECORD', index);
 const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
@@ -47,7 +49,7 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
-				<div class="cell tablerow"><button @click="CLEAR_TABLE">Clear Table</button></div>
+				<div class="cell time"><button @click="CLEAR_TABLE">Clear Table</button></div>
 			</div>
 			<transition-group name="list">
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">

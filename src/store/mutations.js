@@ -1,4 +1,4 @@
-import { secToStr, strToSec } from "@/func";
+import {saveToLS, secToStr, strToSec} from "@/func";
 
 const CLEAR_INPUT = state => {
     state.tdate = '';
@@ -7,6 +7,15 @@ const CLEAR_INPUT = state => {
     state.tstarttime = '';
     state.tendtime = '';
     state.ttime = '';
+    state.inputState = {
+        date: '',
+        projName: '',
+        workType: '',
+        startTime: '',
+        endTime: '',
+        timer: 0
+    }
+    saveToLS('input',state.inputState)
 }
 
 const SET_INPUT = (state, index) => {
@@ -73,37 +82,64 @@ const initInputOptions = state => {
     if (localStorage.getItem('descript') === null) state.descriptList = []
         else state.descriptList = JSON.parse(localStorage.getItem('descript'));
 }
+const initInputState = state => {
+    state.inputState = JSON.parse(localStorage.getItem('input'));
+    state.tdate = state.inputState.date
+    state.tprojName = state.inputState.projName
+    state.tworkType = state.inputState.workType
+    state.tstarttime = state.inputState.startTime
+    state.tendtime = state.inputState.endTime
+}
+const initInputChange = (state, value) => {
+    state.initInput = value
+}
 const updateDate = (state, tdate) => {
     state.tdate = tdate
+    state.inputState.date = state.tdate
+    saveToLS('input', state.inputState)
 }
 
 const updateProjName = (state, tprojName) => {
     state.tprojName = tprojName
     if (state.tdate === '') setCurrentDate(state)
+    state.inputState.projName = state.tprojName
+    saveToLS('input', state.inputState)
 }
 
 const updateWorkType = (state, tworkType) => {
     state.tworkType = tworkType
     if (state.tdate === '') setCurrentDate(state)
+    state.inputState.workType = state.tworkType
+    saveToLS('input', state.inputState)
+}
+
+const updateStartTime = (state, time) => {
+    state.tstarttime = time
+    state.inputState.startTime = state.tstarttime
+    saveToLS('input', state.inputState)
+
+    if (state.starttime !== '' && state.tendtime !== '') {
+        if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
+            state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
+        else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
+    }
+}
+
+const updateEndTime = (state, time) => {
+    state.tendtime = time;
+    state.inputState.endTime = state.tendtime
+    saveToLS('input', state.inputState)
+
+    if (state.starttime !== '' && state.tendtime !== '') {
+        if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
+            state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
+        else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
+    }
 }
 
 const updateTime = (state, ttime) => {
     state.ttime = ttime;
     state.tendtime = secToStr(strToSec(state.tstarttime)+strToSec(state.ttime))
-}
-
-const updateStartTime = (state, time) => {
-    state.tstarttime = time
-    if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
-        state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
-    else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
-}
-
-const updateEndTime = (state, time) => {
-    state.tendtime = time;
-    if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
-        state.ttime = secToStr(strToSec(state.tendtime)-strToSec(state.tstarttime))
-    else state.ttime = secToStr(86400 + strToSec(state.tendtime)-strToSec(state.tstarttime))
 }
 
 const updateStartDate = (state, startDate) => {
@@ -153,6 +189,7 @@ const changeButType = (state, value) => {
 
 const changeTimerButType = (state, value) => {
     state.timerButType = value
+    state.inputState.timer = value
 }
 
 const setAddButtonDis = (state, value) => {
@@ -186,6 +223,7 @@ const setCurrentDate = state => {
     d.setDate(d.getDate());
     let DateParts = d.toLocaleDateString('uk-UA').split('.')
     state.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0];
+    state.inputState.date = state.tdate
 }
 
 const changeTime = state => {
@@ -193,6 +231,9 @@ const changeTime = state => {
     d.setDate(d.getDate());
     let TimeParts = d.toLocaleTimeString('uk-UA').split(':');
     state.tendtime = TimeParts[0] + ':' + TimeParts[1];
+    state.inputState.endTime = state.tendtime
+    saveToLS('input', state.inputState)
+
     if (strToSec(state.tendtime) >= strToSec(state.tstarttime))
         state.ttime = secToStr(strToSec(state.tendtime) - strToSec(state.tstarttime))
     else state.ttime = secToStr(86400 + strToSec(state.tendtime) - strToSec(state.tstarttime)) //add 24-hours
@@ -219,6 +260,8 @@ export default {
     WORK_DEL_ROW,
     initWorks,
     initInputOptions,
+    initInputState,
+    initInputChange,
     updateDate,
     updateProjName,
     updateWorkType,

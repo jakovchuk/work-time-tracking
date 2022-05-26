@@ -31,6 +31,7 @@ const CANCEL_EDIT = () => store.dispatch('CANCEL_EDIT');
 const START_TIMER = () => store.dispatch('START_TIMER');
 const STOP_TIMER = () => store.dispatch('STOP_TIMER');
 const PRESS_ENTER = () => store.dispatch('PRESS_ENTER');
+const CLEAN_INPUT = () => store.dispatch('CLEAN_INPUT');
 
 const updateDate = e => store.commit('updateDate', e.target.value);
 const updateProjName = e => store.commit('updateProjName', e.target.value);
@@ -51,6 +52,7 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
+        <div class="cell time"><button @click="CLEAN_INPUT" :disabled="ADDBUTTON_DIS_STATE">Clear Input</button></div>
 			</div>
 			<div class="row">
 				<div class="cell date">

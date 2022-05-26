@@ -10,6 +10,15 @@ const INIT_INPUTOPTIONS = context => {
     context.commit('initInputOptions')
 }
 
+const INIT_INPUTSTATE = ({ commit, getters, dispatch }) => {
+    commit('initInputState')
+    commit('updateStartTime', getters.TSTARTTIME_STATE)
+    commit('updateEndTime', getters.TENDTIME_STATE)
+    commit('initInputChange', true)
+    if (getters.INPUT_STATE.timer === 1) dispatch('START_TIMER')
+    commit('initInputChange', false)
+}
+
 const CLEAN_INPUT = context => {
     context.commit('CLEAR_INPUT')
 }
@@ -257,11 +266,14 @@ const CANCEL_EDIT = ({ dispatch }) => {
 }
 
 const START_TIMER = ({ commit, getters }) => {
-    if (getters.TTIME_STATE !== '')
-        if (!confirm("Do you want to RESET 'End Time' & 'Elap.Time' fields?"))
-            return false;
+    if (!getters.INIT_INPUT) {
+        if (getters.TTIME_STATE !== '')
+            if (!confirm("Do you want to RESET 'End Time' & 'Elap.Time' fields?"))
+                return false;
+    }
 
     commit('setCurrentDate');
+    saveToLS('input', getters.INPUT_STATE);
     commit('changeTimerButType', 1);
     commit('setAddButtonDis', true);
 
@@ -276,8 +288,9 @@ const START_TIMER = ({ commit, getters }) => {
     commit('focusInputChange');
 }
 
-const STOP_TIMER = ({ commit, dispatch }) => {
+const STOP_TIMER = ({ commit, dispatch, getters }) => {
     commit('changeTimerButType', 0);
+    saveToLS('input', getters.INPUT_STATE);
     commit('setAddButtonDis', false);
     clearInterval(interval);
     if (confirm('Do you want to save this RECORD?'))
@@ -300,6 +313,7 @@ const PRESS_ENTER = ({ getters, dispatch }) => {
 export default {
     INIT_WORKS,
     INIT_INPUTOPTIONS,
+    INIT_INPUTSTATE,
     CLEAN_INPUT,
     CHANGE_INPUT,
     ADD_WORK,
