@@ -1,6 +1,6 @@
 import {quarterTime, saveToLS, strToSec} from "@/func";
 
-var interval = null;
+let interval = null;
 
 const INIT_WORKS = context => {
     context.commit('initWorks')
@@ -284,7 +284,7 @@ const START_TIMER = ({ commit, getters }) => {
         commit('updateStartTime', TimeParts[0]+':'+TimeParts[1]);
 
     commit('changeTime');
-    interval = setInterval(() => { commit('changeTime') }, 1000);
+    interval = setInterval(() => { commit('changeTime') }, 5000);
     commit('focusInputChange');
 }
 
