@@ -129,12 +129,14 @@ button {
   border: 2px solid navy;
 	border-radius: 2px;
   padding: 1px 7px;
+  cursor: pointer;
 }
 button:disabled {
   background-color: #ececec;
   color: #595959;
   border: 2px solid #8f8f8f;
   border-radius: 2px;
+  cursor: default;
 }
 .fade-enter-active {
 	transition: opacity .5s ease;
