@@ -44,8 +44,8 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 		<div class="table">
 			<div class="row header">
 				<div class="cell date">Date</div>
-				<div class="cell tablecol">Project Name</div>
-				<div class="cell tablecol">Description</div>
+				<div class="cell table-column">Project Name</div>
+				<div class="cell table-column">Description</div>
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
@@ -55,8 +55,8 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
 			<div class="row" v-if="WORKS_STATE.date !== '' ">
 				<div class="border cell date">{{ work.date }}</div>
-				<div class="border cell tablecol">{{ work.projName }}</div>
-				<div class="border cell tablecol">{{ work.workType }}</div>
+				<div class="border cell table-column-col">{{ work.projName }}</div>
+				<div class="border cell table-column">{{ work.workType }}</div>
         <div class="border cell time">{{ work.starttime }}</div>
         <div class="border cell time">{{ work.endtime }}</div>
 				<div class="border cell time">{{ work.time }}</div>
@@ -87,7 +87,7 @@ h3{
 		margin: 0;
 }
 
-.tablecol {
+.table-column {
   width: 220px;
 }
 .date {

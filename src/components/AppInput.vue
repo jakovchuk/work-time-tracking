@@ -47,8 +47,8 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
 		<div class="table" style="width: 1230px;">
 			<div class="row header">
 				<div class="cell date">Date</div>
-				<div class="cell tablecol">Project Name</div>
-				<div class="cell tablecol">Description</div>
+				<div class="cell table-column">Project Name</div>
+				<div class="cell table-column">Description</div>
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
@@ -61,7 +61,7 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
                  @input="updateDate"
           >
         </div>
-				<div class="cell tablecol">
+				<div class="cell table-column">
           <input type="text"
                  :value="TPROJNAME_STATE"
                  @input="updateProjName"
@@ -71,7 +71,7 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
                  size="26"
           >
         </div>
-				<div class="cell tablecol">
+				<div class="cell table-column">
           <input type="text"
                  :value="TWORKTYPE_STATE"
                  @input="updateWorkType"
@@ -109,14 +109,14 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
           <button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button>
         </div>
         <template v-if="BUTTYPE_STATE === 0">
-          <div class="cell tablecol" v-if="TIMERBUTTYPE_STATE === 0">
+          <div class="cell table-column" v-if="TIMERBUTTYPE_STATE === 0">
             <button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button>
           </div>
-          <div class="cell tablecol" v-else>
+          <div class="cell table-column" v-else>
             <button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button>
           </div>
         </template>
-        <div class="cell tablecol" v-else></div>
+        <div class="cell table-column" v-else></div>
 			</div>
 		</div>
 		<datalist id="projNameList">
@@ -142,7 +142,7 @@ div.AppInput{
   color: teal;
 }
 
-.tablecol {
+.table-column {
 	width: 220px;
 }
 

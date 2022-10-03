@@ -36,13 +36,13 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
     <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
     <div class="table" style="width: 400px;">
 			<div class="row header" v-if="PROJTIME_STATE.length > 0 ">
-				<div class="cell tablecol">Project Name</div>
+				<div class="cell table-column">Project Name</div>
 				<div class="cell time">Time</div>
 			</div>
       <transition-group name="list">
       <template v-for="pTime in PROJTIME_STATE">
       <div class="row" v-if="pTime.projN !== '' " :key="pTime.id">
-				<div class="border cell tablecol">{{pTime.projN}}</div>
+				<div class="border cell table-column">{{pTime.projN}}</div>
 				<div class="border cell time">{{pTime.projT}}</div>
 			</div>
       </template>
@@ -50,7 +50,7 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
     </div>
     <div class="table" style="width: 400px;">
       <div class="row" v-if="PROJTIME_STATE.length > 0 ">
-        <div class="border cell tablecol"><b>Overall Time:</b></div>
+        <div class="border cell table-column"><b>Overall Time:</b></div>
         <div class="border cell time"><b>{{ TIMESUM_STATE }}</b></div>
       </div>
     </div>
@@ -68,7 +68,7 @@ div.AppQuery{
   margin-top: -0.5em;
   padding-top: 0.5em;
 }
-.tablecol {
+.table-column {
   width: 220px;
 }
 </style>
