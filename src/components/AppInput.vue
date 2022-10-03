@@ -103,10 +103,10 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
           >
         </div>
 				<div class="cell date" v-if="BUTTYPE_STATE === 0">
-          <button @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button>
+          <button class="primary" @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button>
         </div>
 				<div class="cell date" v-else>
-          <button @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button>
+          <button class="primary" @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button>
         </div>
         <template v-if="BUTTYPE_STATE === 0">
           <div class="cell table-column" v-if="TIMERBUTTYPE_STATE === 0">
@@ -169,6 +169,10 @@ button {
   border-radius: 2px;
   padding: 1px 7px;
 }
+button.primary {
+  background-color: #f5e67a;
+  color: black;
+}
 button:disabled {
   background-color: #d5d5d5;
   color: black;
@@ -176,7 +180,7 @@ button:disabled {
   border-radius: 2px;
 }
 button#starttimer {
-  background-color: #53b763;
+  background-color: #33ad4b;
   color: #ffffff;
   border: 2px solid navy;
   border-radius: 2px;

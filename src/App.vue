@@ -60,7 +60,7 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
         <div class="border cell time">{{ work.starttime }}</div>
         <div class="border cell time">{{ work.endtime }}</div>
 				<div class="border cell time">{{ work.time }}</div>
-				<div class="cell date"><button @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
+				<div class="cell date"><button class="primary" @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
 			</div>
       </template>
 		</transition-group>
@@ -127,15 +127,19 @@ button {
   background-color: white;
   color: black;
   border: 2px solid navy;
-	border-radius: 2px;
+	border-radius: 3px;
   padding: 1px 7px;
   cursor: pointer;
+}
+button.primary {
+  background-color: #f5e67a;
+  color: black;
 }
 button:disabled {
   background-color: #ececec;
   color: #595959;
   border: 2px solid #8f8f8f;
-  border-radius: 2px;
+  border-radius: 3px;
   cursor: default;
 }
 .fade-enter-active {
