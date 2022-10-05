@@ -1,6 +1,6 @@
 <script setup>
-import { useStore } from 'vuex';
-import { onBeforeMount, watch, ref, computed } from "vue";
+import { useStore } from 'vuex'
+import { onBeforeMount, watch, ref, computed } from 'vue'
 
 const projName = ref(null)
 
