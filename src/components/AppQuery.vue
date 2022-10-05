@@ -1,29 +1,30 @@
 <script setup>
-import { ref, computed } from "vue";
-import { useStore } from 'vuex';
+import { useStore } from '@/stores/worktime'
+import { computed } from 'vue'
 
-const store = useStore();
+const store = useStore()
 
-const WORKS_STATE = ref(computed(() => store.getters.WORKS_STATE));
-const STARTDATE_STATE = ref(computed(() => store.getters.STARTDATE_STATE));
-const ENDDATE_STATE = ref(computed(() => store.getters.ENDDATE_STATE));
-const CUR_PERIOD = ref(computed(() => store.getters.CUR_PERIOD));
-const PROJTIME_STATE = ref(computed(() => store.getters.PROJTIME_STATE));
-const TIMESUM_STATE = ref(computed(() => store.getters.TIMESUM_STATE));
+const works = computed(() => store.works)
+const startDate = computed(() => store.startDate)
+const endDate = computed(() => store.endDate)
+const period = computed(() => store.period)
+const projectTime = computed(() => store.projTime)
+const timeSum = computed(() => store.timeSum)
 
-const CHANGE_FILTERDATE = () => store.dispatch('CHANGE_FILTERDATE');
-const RESET_FILTER = () => store.dispatch('RESET_FILTER');
-const UPDATE_PERIOD = (e) => store.dispatch('UPDATE_PERIOD', e);
-
-const updateStartDate = e => store.commit('updateStartDate', e.target.value);
-const updateEndDate = e => store.commit('updateEndDate', e.target.value);
+const {
+  changeFilterDate,
+  resetFilter,
+  updatePeriod,
+  updateStartDate,
+  updateEndDate,
+} = store
 </script>
 
 <template>
-  <div class="AppQuery" v-if="WORKS_STATE.length>0 && WORKS_STATE[0].projName !== ''">
+  <div class="AppQuery" v-if="works.length>0 && works[0].projName !== ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:&nbsp;
-      <select name="period" @change="UPDATE_PERIOD($event.target.value)" :value="CUR_PERIOD">
+      <select name="period" @change="updatePeriod($event.target.value)" :value="period">
         <option selected disabled>Choose period</option>
         <option value="Today">Today</option>
         <option value="curWeek">Current week</option>
@@ -31,27 +32,27 @@ const updateEndDate = e => store.commit('updateEndDate', e.target.value);
         <option value="curYear">Current year</option>
       </select>
       <br></b> from&nbsp;
-      <input type="date" name="" :value="STARTDATE_STATE" @input="updateStartDate" @change="CHANGE_FILTERDATE"> to&nbsp;
-      <input type="date" name="" :value="ENDDATE_STATE" @input="updateEndDate" @change="CHANGE_FILTERDATE">&nbsp;
-    <button type="button" name="button" @click="RESET_FILTER">Reset</button>  </p>
+      <input type="date" name="" :value="startDate" @input="updateStartDate($event.target.value)" @change="changeFilterDate"> to&nbsp;
+      <input type="date" name="" :value="endDate" @input="updateEndDate($event.target.value)" @change="changeFilterDate">&nbsp;
+    <button type="button" name="button" @click="resetFilter">Reset</button>  </p>
     <div class="table" style="width: 400px;">
-			<div class="row header" v-if="PROJTIME_STATE.length > 0 ">
+			<div class="row header" v-if="projectTime.length > 0 ">
 				<div class="cell table-column">Project Name</div>
 				<div class="cell time">Time</div>
 			</div>
       <transition-group name="list">
-      <template v-for="pTime in PROJTIME_STATE">
+      <template v-for="pTime in projectTime">
       <div class="row" v-if="pTime.projN !== '' " :key="pTime.id">
-				<div class="border cell table-column">{{pTime.projN}}</div>
-				<div class="border cell time">{{pTime.projT}}</div>
+				<div class="border cell table-column">{{ pTime.projN }}</div>
+				<div class="border cell time">{{ pTime.projT }}</div>
 			</div>
       </template>
       </transition-group>
     </div>
     <div class="table" style="width: 400px;">
-      <div class="row" v-if="PROJTIME_STATE.length > 0 ">
+      <div class="row" v-if="projectTime.length > 0 ">
         <div class="border cell table-column"><b>Overall Time:</b></div>
-        <div class="border cell time"><b>{{ TIMESUM_STATE }}</b></div>
+        <div class="border cell time"><b>{{ timeSum }}</b></div>
       </div>
     </div>
     <br>

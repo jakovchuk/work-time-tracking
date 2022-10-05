@@ -1,37 +1,47 @@
 <script setup>
 import AppInput from './components/AppInput.vue'
 import AppQuery from './components/AppQuery.vue'
-import { useStore } from 'vuex'
-import { onBeforeMount, onMounted, computed, ref, watch } from 'vue'
+import { useStore } from '@/stores/worktime'
+import { onBeforeMount, onMounted, computed, watch } from 'vue'
+
+const store = useStore();
+
+const works = computed(() => store.works)
+const worksChange = computed(() => store.worksChange)
+const addButtonDisabled = computed(() => store.addButtonDis)
+
+const {
+  updateQuery,
+  initWorks,
+  initInputOptions,
+  initializeInput,
+  editRecord,
+  deleteRecord,
+  clearTable,
+} = store
+
+// const UPDATE_QUERY = () => store.dispatch('UPDATE_QUERY');
+// const INIT_WORKS = () => store.dispatch('INIT_WORKS');
+// const INIT_INPUTOPTIONS = () => store.dispatch('INIT_INPUTOPTIONS');
+// const INIT_INPUTSTATE = () => store.dispatch('INIT_INPUTSTATE');
+// const EDIT_RECORD = (index) => store.dispatch('EDIT_RECORD', index);
+// const DELETE_RECORD = (index) => store.dispatch('DELETE_RECORD', index);
+// const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 
 onBeforeMount(() => {
-  watch(WORKSCHANGE_STATE, () => {
-    UPDATE_QUERY()
+  watch(worksChange, () => {
+    updateQuery()
   })
 });
 
 onMounted(() => {
   if(localStorage.works) {
-    INIT_WORKS();
-    INIT_INPUTOPTIONS();
-    INIT_INPUTSTATE();
-    UPDATE_QUERY()
+    initWorks()
+    initInputOptions()
+    initializeInput()
+    updateQuery()
   }
 })
-
-const store = useStore();
-
-const WORKS_STATE = ref(computed(() => store.getters.WORKS_STATE));
-const WORKSCHANGE_STATE = ref(computed(() => store.getters.WORKSCHANGE_STATE));
-const ADDBUTTON_DIS_STATE = ref(computed(() => store.getters.ADDBUTTON_DIS_STATE));
-
-const UPDATE_QUERY = () => store.dispatch('UPDATE_QUERY');
-const INIT_WORKS = () => store.dispatch('INIT_WORKS');
-const INIT_INPUTOPTIONS = () => store.dispatch('INIT_INPUTOPTIONS');
-const INIT_INPUTSTATE = () => store.dispatch('INIT_INPUTSTATE');
-const EDIT_RECORD = (index) => store.dispatch('EDIT_RECORD', index);
-const DELETE_RECORD = (index) => store.dispatch('DELETE_RECORD', index);
-const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 </script>
 
 <template>
@@ -39,7 +49,7 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
 		<h1>Work Time Tracking</h1>
 		<AppInput></AppInput>
 		<transition name="fade">
-		<div v-if="WORKS_STATE.length>0 && WORKS_STATE[0].date !== ''">
+		<div v-if="works.length>0 && works[0].date !== ''">
 		<h3>Data Table:</h3>
 		<div class="table">
 			<div class="row header">
@@ -49,19 +59,21 @@ const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
-				<div class="cell time"><button @click="CLEAR_TABLE">Clear Table</button></div>
+				<div class="cell time"><button @click="clearTable">Clear Table</button></div>
 			</div>
 			<transition-group name="list">
-			<template v-for="(work, id) in WORKS_STATE" :key="work.id">
-			<div class="row" v-if="WORKS_STATE.date !== '' ">
-				<div class="border cell date">{{ work.date }}</div>
-				<div class="border cell table-column-col">{{ work.projName }}</div>
-				<div class="border cell table-column">{{ work.workType }}</div>
-        <div class="border cell time">{{ work.starttime }}</div>
-        <div class="border cell time">{{ work.endtime }}</div>
-				<div class="border cell time">{{ work.time }}</div>
-				<div class="cell date"><button class="primary" @click="EDIT_RECORD(id)" :disabled="ADDBUTTON_DIS_STATE">Edit</button> <button @click="DELETE_RECORD(id)">- Delete</button></div>
-			</div>
+			<template v-for="(work, row) in works" :key="work.id">
+        <div class="row" v-if="work.date !== '' ">
+          <div class="border cell date">{{ work.date }}</div>
+          <div class="border cell table-column-col">{{ work.projName }}</div>
+          <div class="border cell table-column">{{ work.workType }}</div>
+          <div class="border cell time">{{ work.starttime }}</div>
+          <div class="border cell time">{{ work.endtime }}</div>
+          <div class="border cell time">{{ work.time }}</div>
+          <div class="cell date">
+            <button class="primary" @click="editRecord(row)" :disabled="addButtonDisabled">Edit</button> <button @click="deleteRecord(row)">- Delete</button>
+          </div>
+        </div>
       </template>
 		</transition-group>
 		</div>

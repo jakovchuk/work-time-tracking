@@ -506,9 +506,6 @@ export const useStore = defineStore('worktime', {
             }
         },
 
-        changeButType(value) {
-            this.butType = value
-        },
         changeTimerButType(value) {
             this.timerButType = value
             this.inputState.timer = value
@@ -516,9 +513,6 @@ export const useStore = defineStore('worktime', {
 
         setAddButDis(value) {
             this.addButtonDis = value
-        },
-        setCurNum(value) {
-            this.curNum = value
         },
 
         incWorksChange() {
