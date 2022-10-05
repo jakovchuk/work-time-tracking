@@ -1,44 +1,47 @@
 <script setup>
-import { useStore } from 'vuex'
+import { useStore } from '@/stores/worktime'
 import { onBeforeMount, watch, ref, computed } from 'vue'
 
 const projName = ref(null)
 
+const store = useStore()
+
+const projNameList = computed(() => store.projNameList)
+const descriptList = computed(() => store.descriptList)
+
+const tDate = computed(() => store.tdate)
+const tProjName = computed(() => store.tprojName)
+const tWorkType = computed(() => store.tworkType)
+const tStartTime = computed(() => store.tstarttime)
+const tEndTime = computed(() => store.tendtime)
+const tTime = computed(() => store.ttime)
+
+const buttonType = computed(() => store.butType)
+const timerButtonType = computed(() => store.timerButType)
+const addButtonDisabled = computed(() => store.addButtonDis)
+const focusInput = computed(() => store.focusInput)
+
+const {
+  addRecord,
+  saveRecord,
+  cancelEdit,
+  startTimer,
+  stopTimer,
+  pressEnter,
+  clearInput,
+  updateDate,
+  updateProjName,
+  updateWorkType,
+  updateTime,
+  updateStartTime,
+  updateEndTime,
+} = store
+
 onBeforeMount(() => {
-  watch(FOCUSINPUT_STATE, () => {
+  watch(focusInput, () => {
     projName.value.focus()
   })
-});
-
-const store = useStore();
-
-const PROJNAMELIST_STATE = ref(computed(() => store.getters.PROJNAMELIST_STATE));
-const DESCRIPTLIST_STATE = ref(computed(() => store.getters.DESCRIPTLIST_STATE));
-const TDATE_STATE = ref(computed(() => store.getters.TDATE_STATE));
-const TPROJNAME_STATE = ref(computed(() => store.getters.TPROJNAME_STATE));
-const TWORKTYPE_STATE = ref(computed(() => store.getters.TWORKTYPE_STATE));
-const TTIME_STATE = ref(computed(() => store.getters.TTIME_STATE));
-const TSTARTTIME_STATE = ref(computed(() => store.getters.TSTARTTIME_STATE));
-const TENDTIME_STATE = ref(computed(() => store.getters.TENDTIME_STATE));
-const BUTTYPE_STATE = ref(computed(() => store.getters.BUTTYPE_STATE));
-const TIMERBUTTYPE_STATE = ref(computed(() => store.getters.TIMERBUTTYPE_STATE));
-const ADDBUTTON_DIS_STATE = ref(computed(() => store.getters.ADDBUTTON_DIS_STATE));
-const FOCUSINPUT_STATE = ref(computed(() => store.getters.FOCUSINPUT_STATE));
-
-const ADD_RECORD = () => store.dispatch('ADD_RECORD');
-const SAVE_RECORD = () => store.dispatch('SAVE_RECORD');
-const CANCEL_EDIT = () => store.dispatch('CANCEL_EDIT');
-const START_TIMER = () => store.dispatch('START_TIMER');
-const STOP_TIMER = () => store.dispatch('STOP_TIMER');
-const PRESS_ENTER = () => store.dispatch('PRESS_ENTER');
-const CLEAN_INPUT = () => store.dispatch('CLEAN_INPUT');
-
-const updateDate = e => store.commit('updateDate', e.target.value);
-const updateProjName = e => store.commit('updateProjName', e.target.value);
-const updateWorkType = e => store.commit('updateWorkType', e.target.value);
-const updateTime = e => store.commit('updateTime', e.target.value);
-const updateStartTime = e => store.commit('updateStartTime', e.target.value);
-const updateEndTime = e => store.commit('updateEndTime', e.target.value);
+})
 </script>
 
 <template>
@@ -52,20 +55,20 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
-        <div class="cell time"><button @click="CLEAN_INPUT" :disabled="ADDBUTTON_DIS_STATE">Clear Input</button></div>
+        <div class="cell time"><button @click="clearInput" :disabled="addButtonDisabled">Clear Input</button></div>
 			</div>
 			<div class="row">
 				<div class="cell date">
           <input type="date"
-                 :value="TDATE_STATE"
-                 @input="updateDate"
+                 :value="tDate"
+                 @input="updateDate($event.target.value)"
           >
         </div>
 				<div class="cell table-column">
           <input type="text"
-                 :value="TPROJNAME_STATE"
-                 @input="updateProjName"
-                 @keyup.enter="PRESS_ENTER"
+                 :value="tProjName"
+                 @input="updateProjName($event.target.value)"
+                 @keyup.enter="pressEnter"
                  list="projNameList"
                  ref="projName"
                  size="26"
@@ -73,9 +76,9 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
         </div>
 				<div class="cell table-column">
           <input type="text"
-                 :value="TWORKTYPE_STATE"
-                 @input="updateWorkType"
-                 @keyup.enter="PRESS_ENTER"
+                 :value="tWorkType"
+                 @input="updateWorkType($event.target.value)"
+                 @keyup.enter="pressEnter"
                  list="DescriptList"
                  size="26"
           >
@@ -83,47 +86,47 @@ const updateEndTime = e => store.commit('updateEndTime', e.target.value);
         <div class="cell time">
           <input
               type="time"
-              :value="TSTARTTIME_STATE"
-              @input="updateStartTime"
-              :disabled="ADDBUTTON_DIS_STATE"
+              :value="tStartTime"
+              @input="updateStartTime($event.target.value)"
+              :disabled="addButtonDisabled"
           >
         </div>
         <div class="cell time">
           <input type="time"
-                 :value="TENDTIME_STATE"
-                 @input="updateEndTime"
-                 :disabled="ADDBUTTON_DIS_STATE"
+                 :value="tEndTime"
+                 @input="updateEndTime($event.target.value)"
+                 :disabled="addButtonDisabled"
           >
         </div>
 				<div class="cell time">
           <input type="time"
-                 :value="TTIME_STATE"
-                 @input="updateTime"
-                 :disabled="ADDBUTTON_DIS_STATE"
+                 :value="tTime"
+                 @input="updateTime($event.target.value)"
+                 :disabled="addButtonDisabled"
           >
         </div>
-				<div class="cell date" v-if="BUTTYPE_STATE === 0">
-          <button class="primary" @click="ADD_RECORD" :disabled="ADDBUTTON_DIS_STATE">+ Add record</button>
+				<div class="cell date" v-if="buttonType === 0">
+          <button class="primary" @click="addRecord" :disabled="addButtonDisabled">+ Add record</button>
         </div>
 				<div class="cell date" v-else>
-          <button class="primary" @click="SAVE_RECORD">Save</button> <button @click="CANCEL_EDIT">Cancel</button>
+          <button class="primary" @click="saveRecord">Save</button> <button @click="cancelEdit">Cancel</button>
         </div>
-        <template v-if="BUTTYPE_STATE === 0">
-          <div class="cell table-column" v-if="TIMERBUTTYPE_STATE === 0">
-            <button id="starttimer" @click="START_TIMER">&#9658; Start Timer</button>
+        <template v-if="buttonType === 0">
+          <div class="cell table-column" v-if="timerButtonType === 0">
+            <button id="start-timer" @click="startTimer">&#9658; Start Timer</button>
           </div>
           <div class="cell table-column" v-else>
-            <button id="stoptimer" @click="STOP_TIMER">&#8718; Stop Timer</button>
+            <button id="stop-timer" @click="stopTimer">&#8718; Stop Timer</button>
           </div>
         </template>
         <div class="cell table-column" v-else></div>
 			</div>
 		</div>
 		<datalist id="projNameList">
-			<option v-for="projName in PROJNAMELIST_STATE" :key="projName.id">{{ projName }}</option>
+			<option v-for="projName in projNameList" :key="projName.id">{{ projName }}</option>
 		</datalist>
 		<datalist id="DescriptList">
-      <option v-for="descript in DESCRIPTLIST_STATE" :key="descript.id">{{ descript }}</option>
+      <option v-for="descript in descriptList" :key="descript.id">{{ descript }}</option>
 		</datalist>
 		<br>
 		<hr>
@@ -179,13 +182,13 @@ button:disabled {
   border: 2px solid navy;
   border-radius: 2px;
 }
-button#starttimer {
+button#start-timer {
   background-color: #33ad4b;
   color: #ffffff;
   border: 2px solid navy;
   border-radius: 2px;
 }
-button#stoptimer {
+button#stop-timer {
   background-color: #b04a4a;
   color: #ffffff;
   border: 2px solid navy;
