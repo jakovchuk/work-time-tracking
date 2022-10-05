@@ -4,7 +4,7 @@ import AppQuery from './components/AppQuery.vue'
 import { useStore } from '@/stores/worktime'
 import { onBeforeMount, onMounted, computed, watch } from 'vue'
 
-const store = useStore();
+const store = useStore()
 
 const works = computed(() => store.works)
 const worksChange = computed(() => store.worksChange)
@@ -20,19 +20,11 @@ const {
   clearTable,
 } = store
 
-// const UPDATE_QUERY = () => store.dispatch('UPDATE_QUERY');
-// const INIT_WORKS = () => store.dispatch('INIT_WORKS');
-// const INIT_INPUTOPTIONS = () => store.dispatch('INIT_INPUTOPTIONS');
-// const INIT_INPUTSTATE = () => store.dispatch('INIT_INPUTSTATE');
-// const EDIT_RECORD = (index) => store.dispatch('EDIT_RECORD', index);
-// const DELETE_RECORD = (index) => store.dispatch('DELETE_RECORD', index);
-// const CLEAR_TABLE = () => store.dispatch('CLEAR_TABLE');
-
 onBeforeMount(() => {
   watch(worksChange, () => {
     updateQuery()
   })
-});
+})
 
 onMounted(() => {
   if(localStorage.works) {
