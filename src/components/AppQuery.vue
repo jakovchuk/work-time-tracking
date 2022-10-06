@@ -21,7 +21,7 @@ const {
 </script>
 
 <template>
-  <div class="AppQuery" v-if="works.length>0 && works[0].projName !== ''">
+  <div class="AppQuery" v-if="works.length > 0 && works[0].projName !== ''">
 		<h3>Total Project Time:</h3>
     <p><b>Date filter:&nbsp;
       <select name="period" @change="updatePeriod($event.target.value)" :value="period">
