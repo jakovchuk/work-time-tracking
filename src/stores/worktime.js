@@ -50,13 +50,13 @@ export const useStore = defineStore('worktime', {
     }),
 
     getters: {
-        tempValues: (state) => {
-           return !(state.tdate === '' ||
+        inputIsEmpty: (state) => {
+           return state.tdate === '' ||
                 state.tprojName === '' ||
                 state.tworkType === '' ||
                 state.tstarttime === '' ||
                 state.tendtime === '' ||
-                state.ttime === '')
+                state.ttime === ''
         },
     },
 
@@ -233,7 +233,7 @@ export const useStore = defineStore('worktime', {
         },
 
         addRecord() {
-            if (!this.tempValues ||
+            if (this.inputIsEmpty ||
                 this.ttime === '00:00' ||
                 this.tendtime === '00:00') {
                 alert('Fill ALL input fields, please!')
@@ -303,7 +303,7 @@ export const useStore = defineStore('worktime', {
             }
         },
         saveRecord() {
-            if (!this.tempValues ||
+            if (this.inputIsEmpty ||
                 this.ttime === '00:00' ||
                 this.tendtime === '00:00') {
                 alert('Fill ALL input fields, please!');
