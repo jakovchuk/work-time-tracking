@@ -40,7 +40,7 @@ export const useStore = defineStore('worktime', {
         endDate: '',
         timeSum: '',
         period: 'Choose period',
-        butType: 0,
+        buttonType: 0,
         timerButType: 0,
         addButtonDis: false,
         curNum: 0,
@@ -101,7 +101,7 @@ export const useStore = defineStore('worktime', {
 
             this.changeTime()
             this.interval = setInterval(() => this.changeTime(), 5000);
-            this.focusInputChange()
+            this.focusInput = this.focusInput === 0 ? 1 : 0
         },
         stopTimer() {
             this.timerButType = 0
@@ -115,27 +115,22 @@ export const useStore = defineStore('worktime', {
             }
         },
         changeTime() {
-            let d = new Date();
-            d.setDate(d.getDate());
-            let timeParts = d.toLocaleTimeString('uk-UA').split(':');
-            this.tendtime = timeParts[0] + ':' + timeParts[1];
+            let d = new Date()
+            d.setDate(d.getDate())
+            let timeParts = d.toLocaleTimeString('uk-UA').split(':')
+            this.tendtime = timeParts[0] + ':' + timeParts[1]
             this.inputState.endTime = this.tendtime
+            this.countTime()
             saveToLS('input', this.inputState)
-
-            if (strToSec(this.tendtime) >= strToSec(this.tstarttime)) {
-                this.ttime = secToStr(strToSec(this.tendtime) - strToSec(this.tstarttime))
-            } else {
-                this.ttime = secToStr(86400 + strToSec(this.tendtime) - strToSec(this.tstarttime))
-            } //add 24-hours
         },
 
         clearInput() {
-            this.tdate = '';
-            this.tprojName = '';
-            this.tworkType = '';
-            this.tstarttime = '';
-            this.tendtime = '';
-            this.ttime = '';
+            this.tdate = ''
+            this.tprojName = ''
+            this.tworkType = ''
+            this.tstarttime = ''
+            this.tendtime = ''
+            this.ttime = ''
             this.inputState = {
                 date: '',
                 projName: '',
@@ -148,17 +143,8 @@ export const useStore = defineStore('worktime', {
         },
 
         initInputOptions() {
-            if (localStorage.getItem('projNames') === null)  {
-                this.projNameList = []
-            } else {
-                this.projNameList = JSON.parse(localStorage.getItem('projNames'));
-            }
-
-            if (localStorage.getItem('descript') === null) {
-                this.descriptList = []
-            } else {
-                this.descriptList = JSON.parse(localStorage.getItem('descript'));
-            }
+            this.projNameList = localStorage.getItem('projNames') ? JSON.parse(localStorage.getItem('projNames')) : []
+            this.descriptList = localStorage.getItem('descript') ? JSON.parse(localStorage.getItem('descript')) : []
         },
 
         initWorks() {
@@ -188,43 +174,39 @@ export const useStore = defineStore('worktime', {
         },
         updateTime(ttime) {
             this.ttime = ttime;
-            this.tendtime = secToStr(strToSec(this.tstarttime)+strToSec(this.ttime))
+            this.tendtime = secToStr(strToSec(this.tstarttime) + strToSec(this.ttime))
         },
 
         setCurrentDate() {
             let d = new Date()
             d.setDate(d.getDate());
             let DateParts = d.toLocaleDateString('uk-UA').split('.')
-            this.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0];
+            this.tdate = DateParts[2] + "-" + DateParts[1] + "-" + DateParts[0]
             this.inputState.date = this.tdate
         },
 
         updateStartTime(time) {
             this.tstarttime = time
             this.inputState.startTime = this.tstarttime
+            this.countTime()
             saveToLS('input', this.inputState)
-
-            if (this.tstarttime !== '' && this.tendtime !== '') {
-                if (strToSec(this.tendtime) >= strToSec(this.tstarttime)) {
-                    this.ttime = secToStr(strToSec(this.tendtime) - strToSec(this.tstarttime))
-                } else {
-                    this.ttime = secToStr(86400 + strToSec(this.tendtime)-strToSec(this.tstarttime))
-                }
-            }
         },
         updateEndTime(time) {
             this.tendtime = time;
             this.inputState.endTime = this.tendtime
+            this.countTime()
             saveToLS('input', this.inputState)
-
+        },
+        countTime() {
             if (this.tstarttime !== '' && this.tendtime !== '') {
                 if (strToSec(this.tendtime) >= strToSec(this.tstarttime)) {
-                    this.ttime = secToStr(strToSec(this.tendtime)-strToSec(this.tstarttime))
-                } else {
-                    this.ttime = secToStr(86400 + strToSec(this.tendtime)-strToSec(this.tstarttime))
+                    this.ttime = secToStr(strToSec(this.tendtime) - strToSec(this.tstarttime))
+                } else { //add 24 hours
+                    this.ttime = secToStr(86400 + strToSec(this.tendtime) - strToSec(this.tstarttime))
                 }
             }
         },
+
         updateStartDate(startDate) {
             this.startDate = startDate
         },
@@ -259,18 +241,18 @@ export const useStore = defineStore('worktime', {
             })
 
             this.works.sort((a, b) => {
-                if (a.date < b.date) return -1;
-                if (a.date > b.date) return 1;
+                if (a.date < b.date) return -1
+                if (a.date > b.date) return 1
                 if (strToSec(a.starttime) < strToSec(b.starttime)) return -1
                 if (strToSec(a.starttime) > strToSec(b.starttime)) return 1
-                return 0;
+                return 0
             })
 
             this.projNameList.push(this.tprojName);
-            this.projNameList = Array.from(new Set(this.projNameList)); //remove duplicates
+            this.projNameList = Array.from(new Set(this.projNameList)) //remove duplicates
 
             this.descriptList.push(this.tworkType);
-            this.descriptList = Array.from(new Set(this.descriptList)); //remove duplicates
+            this.descriptList = Array.from(new Set(this.descriptList)) //remove duplicates
 
             saveToLS('projNames', this.projNameList) //save projNamesList to localStorage
             saveToLS('descript', this.descriptList) //save descriptList to localStorage
@@ -278,7 +260,7 @@ export const useStore = defineStore('worktime', {
 
             this.clearInput()
 
-            this.incWorksChange()
+            this.worksChange = this.worksChange === 0 ? 1 : 0
         },
         editRecord(row) {
             this.tdate = this.works[row].date
@@ -288,7 +270,7 @@ export const useStore = defineStore('worktime', {
             this.tendtime = this.works[row].endtime
             this.ttime = this.works[row].time
 
-            this.butType = 1
+            this.buttonType = 1
             this.curNum = row
         },
         deleteRecord(row) {
@@ -298,8 +280,8 @@ export const useStore = defineStore('worktime', {
 
                 this.clearInput()
 
-                this.butType = 0
-                this.incWorksChange()
+                this.buttonType = 0
+                this.worksChange = this.worksChange === 0 ? 1 : 0
             }
         },
         saveRecord() {
@@ -314,22 +296,22 @@ export const useStore = defineStore('worktime', {
             this.updateStartTime(quarterTime(this.tstarttime))
             this.updateEndTime(quarterTime(this.tendtime))
 
-            this.works[this.curNum].id = this.curNum + 1;
-            this.works[this.curNum].date = this.tdate;
-            this.works[this.curNum].projName = this.tprojName;
-            this.works[this.curNum].workType = this.tworkType;
-            this.works[this.curNum].starttime = this.tstarttime;
-            this.works[this.curNum].endtime = this.tendtime;
-            this.works[this.curNum].time = this.ttime;
+            this.works[this.curNum].id = this.curNum + 1
+            this.works[this.curNum].date = this.tdate
+            this.works[this.curNum].projName = this.tprojName
+            this.works[this.curNum].workType = this.tworkType
+            this.works[this.curNum].starttime = this.tstarttime
+            this.works[this.curNum].endtime = this.tendtime
+            this.works[this.curNum].time = this.ttime
             saveToLS('works', this.works) //save Works to localStorage
             this.clearInput()
 
-            this.butType = 0
-            this.incWorksChange()
+            this.buttonType = 0
+            this.worksChange = this.worksChange === 0 ? 1 : 0
         },
         cancelEdit() {
             this.clearInput()
-            this.butType = 0
+            this.buttonType = 0
         },
         clearTable() {
             if (confirm('Do you want to CLEAR TABLE?')) {
@@ -451,18 +433,10 @@ export const useStore = defineStore('worktime', {
         },
 
         setStartDate(sDateParts) {
-            if (sDateParts !== '') {
-                this.startDate = sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0];
-            } else {
-                this.startDate = ''
-            }
+            this.startDate = sDateParts !== '' ? sDateParts[2] + "-" + sDateParts[1] + "-" + sDateParts[0] : ''
         },
         setEndDate(eDateParts) {
-            if (eDateParts !== '') {
-                this.endDate = eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0];
-            } else {
-                this.endDate = ''
-            }
+            this.endDate = eDateParts !== '' ? eDateParts[2] + "-" + eDateParts[1] + "-" + eDateParts[0] : ''
         },
 
         changeFilterDate() {
@@ -477,28 +451,12 @@ export const useStore = defineStore('worktime', {
         },
 
         pressEnter() {
-            if (this.butType === 0) {
+            if (this.buttonType === 0) {
                 if (!this.addButtonDis) {
                     this.addRecord()
                 }
             } else {
                 this.saveRecord()
-            }
-        },
-
-        incWorksChange() {
-            if (this.worksChange === 0) { //Change value
-                this.worksChange = 1
-            } else {
-                this.worksChange = 0
-            }
-        },
-
-        focusInputChange() {
-            if (this.focusInput === 0) { //Change value
-                this.focusInput = 1
-            } else {
-                this.focusInput = 0
             }
         },
     },

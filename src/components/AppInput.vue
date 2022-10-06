@@ -16,7 +16,7 @@ const tStartTime = computed(() => store.tstarttime)
 const tEndTime = computed(() => store.tendtime)
 const tTime = computed(() => store.ttime)
 
-const buttonType = computed(() => store.butType)
+const buttonType = computed(() => store.buttonType)
 const timerButtonType = computed(() => store.timerButType)
 const addButtonDisabled = computed(() => store.addButtonDis)
 const focusInput = computed(() => store.focusInput)
