@@ -28,6 +28,8 @@ const {
   startTimer,
   stopTimer,
   pressEnter,
+  clearProjNameList,
+  clearDescriptList,
   clearInput,
   updateDate,
   updateProjName,
@@ -50,12 +52,12 @@ onBeforeMount(() => {
 		<div class="table" style="width: 1230px;">
 			<div class="row header">
 				<div class="cell date">Date</div>
-				<div class="cell table-column">Project Name</div>
-				<div class="cell table-column">Description</div>
+				<div class="cell table-column">Project Name <button class="clear" @click="clearProjNameList">Clear</button></div>
+				<div class="cell table-column">Description <button class="clear" @click="clearDescriptList">Clear</button></div>
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
-        <div class="cell time"><button @click="clearInput" :disabled="addButtonDisabled">Clear Input</button></div>
+        <div class="cell time"><button class="clear" @click="clearInput" :disabled="addButtonDisabled">Clear Input</button></div>
 			</div>
 			<div class="row">
 				<div class="cell date">
@@ -173,8 +175,13 @@ button {
   padding: 1px 7px;
 }
 button.primary {
-  background-color: #f5e67a;
+  background-color: #f9e79f;
   color: black;
+}
+button.clear {
+  border: 2px solid #b04a4a;
+  background-color: #fadbd8;
+  font: .8em "Tahoma";
 }
 button:disabled {
   background-color: #d5d5d5;

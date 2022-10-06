@@ -56,7 +56,7 @@ onMounted(() => {
         <div class="cell time">Start Time</div>
         <div class="cell time">End Time</div>
 				<div class="cell time">Elap. Time</div>
-				<div class="cell time"><button @click="clearTable">Clear Table</button></div>
+				<div class="cell time"><button class="clear" @click="clearTable">Clear Table</button></div>
 			</div>
 			<transition-group name="list">
 			<template v-for="(work, row) in works" :key="work.id">
@@ -141,8 +141,13 @@ button {
   cursor: pointer;
 }
 button.primary {
-  background-color: #f5e67a;
+  background-color: #f9e79f;
   color: black;
+}
+button.clear {
+  border: 2px solid #b04a4a;
+  background-color: #fadbd8;
+  font: .8em "Tahoma";
 }
 button:disabled {
   background-color: #ececec;

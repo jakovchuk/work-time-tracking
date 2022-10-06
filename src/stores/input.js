@@ -110,6 +110,20 @@ export const useInputStore = defineStore('input', {
             saveToLS('input', this.inputState)
         },
 
+        clearProjNameList() {
+            if (confirm('Do you want to clear PROJECT NAME options?')) {
+                this.projNameList = []
+                saveToLS('projNames', this.projNameList)
+                this.tprojName = ''
+            }
+        },
+        clearDescriptList() {
+            if (confirm('Do you want to clear DESCRIPTION options?')) {
+                this.descriptList = []
+                saveToLS('descript', this.descriptList)
+                this.tworkType = ''
+            }
+        },
         clearInput() {
             this.tdate = ''
             this.tprojName = ''
