@@ -1,25 +1,25 @@
 <script setup>
-import { useStore } from '@/stores/worktime'
+import { useInputStore } from '@/stores/input'
 import { onBeforeMount, watch, ref, computed } from 'vue'
 
 const projName = ref(null)
 
-const store = useStore()
+const inputStore = useInputStore()
 
-const projNameList = computed(() => store.projNameList)
-const descriptList = computed(() => store.descriptList)
+const projNameList = computed(() => inputStore.projNameList)
+const descriptList = computed(() => inputStore.descriptList)
 
-const tDate = computed(() => store.tdate)
-const tProjName = computed(() => store.tprojName)
-const tWorkType = computed(() => store.tworkType)
-const tStartTime = computed(() => store.tstarttime)
-const tEndTime = computed(() => store.tendtime)
-const tTime = computed(() => store.ttime)
+const tDate = computed(() => inputStore.tdate)
+const tProjName = computed(() => inputStore.tprojName)
+const tWorkType = computed(() => inputStore.tworkType)
+const tStartTime = computed(() => inputStore.tstarttime)
+const tEndTime = computed(() => inputStore.tendtime)
+const tTime = computed(() => inputStore.ttime)
 
-const buttonType = computed(() => store.buttonType)
-const timerButtonType = computed(() => store.timerButType)
-const addButtonDisabled = computed(() => store.addButtonDis)
-const focusInput = computed(() => store.focusInput)
+const buttonType = computed(() => inputStore.buttonType)
+const timerButtonType = computed(() => inputStore.timerButtonType)
+const addButtonDisabled = computed(() => inputStore.addButtonDisabled)
+const focusInput = computed(() => inputStore.focusInput)
 
 const {
   addRecord,
@@ -35,7 +35,7 @@ const {
   updateTime,
   updateStartTime,
   updateEndTime,
-} = store
+} = inputStore
 
 onBeforeMount(() => {
   watch(focusInput, () => {

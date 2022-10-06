@@ -1,8 +1,8 @@
 <script setup>
-import { useStore } from '@/stores/worktime'
+import { useMainStore } from '@/stores/main'
 import { computed } from 'vue'
 
-const store = useStore()
+const store = useMainStore()
 
 const works = computed(() => store.works)
 const startDate = computed(() => store.startDate)

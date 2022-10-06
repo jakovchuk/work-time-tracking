@@ -1,24 +1,29 @@
 <script setup>
 import AppInput from './components/AppInput.vue'
 import AppQuery from './components/AppQuery.vue'
-import { useStore } from '@/stores/worktime'
+import { useMainStore } from '@/stores/main'
+import { useInputStore } from '@/stores/input'
 import { onBeforeMount, onMounted, computed, watch } from 'vue'
 
-const store = useStore()
+const mainStore = useMainStore()
+const inputStore = useInputStore()
 
-const works = computed(() => store.works)
-const worksChange = computed(() => store.worksChange)
-const addButtonDisabled = computed(() => store.addButtonDis)
+const works = computed(() => mainStore.works)
+const worksChange = computed(() => inputStore.worksChange)
+const addButtonDisabled = computed(() => inputStore.addButtonDisabled)
 
 const {
   updateQuery,
   initWorks,
-  initInputOptions,
-  initializeInput,
   editRecord,
   deleteRecord,
   clearTable,
-} = store
+} = mainStore
+
+const {
+  initInputOptions,
+  initializeInput,
+} = inputStore
 
 onBeforeMount(() => {
   watch(worksChange, () => {
@@ -27,7 +32,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  if(localStorage.works) {
+  if (localStorage.works) {
     initWorks()
     initInputOptions()
     initializeInput()
@@ -59,8 +64,8 @@ onMounted(() => {
           <div class="border cell date">{{ work.date }}</div>
           <div class="border cell table-column-col">{{ work.projName }}</div>
           <div class="border cell table-column">{{ work.workType }}</div>
-          <div class="border cell time">{{ work.starttime }}</div>
-          <div class="border cell time">{{ work.endtime }}</div>
+          <div class="border cell time">{{ work.startTime }}</div>
+          <div class="border cell time">{{ work.endTime }}</div>
           <div class="border cell time">{{ work.time }}</div>
           <div class="cell date">
             <button class="primary" @click="editRecord(row)" :disabled="addButtonDisabled">Edit</button> <button @click="deleteRecord(row)">- Delete</button>
