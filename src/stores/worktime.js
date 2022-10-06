@@ -54,8 +54,8 @@ export const useStore = defineStore('worktime', {
            return !(state.tdate === '' ||
                 state.tprojName === '' ||
                 state.tworkType === '' ||
-                state.starttime === '' ||
-                state.endtime === '' ||
+                state.tstarttime === '' ||
+                state.tendtime === '' ||
                 state.ttime === '')
         },
     },
